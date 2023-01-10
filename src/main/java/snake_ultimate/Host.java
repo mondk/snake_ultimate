@@ -42,7 +42,7 @@ try {
 			while (queue.query(new ActualField("start"))==null) {
 				
 				
-				Object[] p = queue.query(new ActualField("join"),new FormalField(String.class));
+				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class));
 				if(p!=null) {
 					players.add(new PlayerInfo((String)p[1]));
 				}
@@ -59,7 +59,7 @@ try {
 				//update player position
 				for(PlayerInfo p:players) {
 					char m;
-					Object[] t = p.movement.getp(new FormalField(char.class));
+					Object[] t = p.movement.query(new FormalField(char.class));
 					if(t!=null) {
 						m=(char) t[0];
 						if(m=='a') {
