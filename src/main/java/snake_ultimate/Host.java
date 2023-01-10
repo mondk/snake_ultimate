@@ -40,7 +40,9 @@ try {
 
 			// queuing players 
 			while (queue.query(new ActualField("start"))==null) {
-				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class));
+				
+				
+				Object[] p = queue.query(new ActualField("join"),new FormalField(String.class));
 				if(p!=null) {
 					players.add(new PlayerInfo((String)p[1]));
 				}
@@ -69,6 +71,8 @@ try {
 					}
 					//move player
 					p.move();
+					
+					
 					
 				}
 				
