@@ -13,16 +13,34 @@ public class Client {
 	public static void main(String[] args) throws InterruptedException {
 
 		try {
-			
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-
+			
+			System.out.println("Hello and Welcome to ultimate Snek!");
+			System.out.println("Type \"Host\" if you want to host a game,");
+			System.out.println("type \"Join\" if you want to join a game.");
+			System.out.println("Or type \"Exit\" to close the game");
+			
+			String option = input.readLine();
+			
+			while(true) {
+				if(option.equals("Host")) {
+					
+				}
+				else if(option.equals("Join")) {
+					
+				}
+				else if(option.equals("Exit")) {
+					break;
+				}
+			}
+			
 			// Set the URI of the chat space
 			// Default value
 			System.out.print("Enter URI of the chat server or press enter for default: ");
 			String uri = input.readLine();
 			// Default value
 			if (uri.isEmpty()) { 
-				uri = "tcp://127.0.0.1:9001/chat?keep";
+				uri = "tcp://10.209.118.64:9001/chat?keep";
 			}
 
 			// Connect to the remote chat space 
