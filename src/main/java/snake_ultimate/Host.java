@@ -57,7 +57,7 @@ try {
 				//update player position
 				for(PlayerInfo p:players) {
 					char m;
-					Object[] t = p.movement.query(new FormalField(char.class));
+					Object[] t = p.movement.getp(new FormalField(char.class));
 					if(t!=null) {
 						m=(char) t[0];
 						if(m=='a') {
@@ -71,6 +71,8 @@ try {
 					p.move();
 					
 				}
+				
+				//collision is checked for all players
 				checkCollision(players);
 				
 			}
