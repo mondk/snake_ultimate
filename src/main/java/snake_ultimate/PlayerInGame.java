@@ -1,21 +1,12 @@
 package snake_ultimate;
 
-<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
-=======
 import java.awt.*;
 import javax.swing.JPanel;
-
-public class PlayerInGame {
->>>>>>> 5cc3a9d1aaeddd52c90b928a0a9a9d264e6e252c
-
 import javax.imageio.IIOException;
-
-import org.jspace.RemoteSpace;
-import org.jspace.SequentialSpace;
 import org.jspace.*;
 
 public class PlayerInGame {
