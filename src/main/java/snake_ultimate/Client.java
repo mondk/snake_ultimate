@@ -83,6 +83,9 @@ public class Client {
 			RemoteSpace position = new RemoteSpace(uriM);
 			RemoteSpace movement = new RemoteSpace(uriP);
 
+			while(true) {
+				
+			}
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

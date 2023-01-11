@@ -9,74 +9,31 @@ import javax.swing.JPanel;
 import javax.imageio.IIOException;
 import org.jspace.*;
 
-public class PlayerInGame {
+public class PlayerInGame implements Runnable{
 	
 	private static String name;
 	private static RemoteSpace position;
 	private static RemoteSpace movement;
-	private static RemoteSpace queue;
-	private static String IP;
-	public static boolean isHost=false;
+	private int numOfPlayers;
 	
-	PlayerInGame(String name,String IP){
+	PlayerInGame(int numberOfPlayers,String name,RemoteSpace position,RemoteSpace movement){
 		this.name=name;
-		this.IP=IP;
+		this.position=position;
+		this.movement=movement;
+		this.numOfPlayers=numberOfPlayers;
+		
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		//new Thread(new sendInput(movement)).start();
+		new Thread(new DrawUpdate(numOfPlayers, position)).start();
 		
 	}
 
-	public static void main(String[] args) throws InterruptedException, IOException {
-		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		connectToHost();
-		
-		//chat before game
-		while(true) {
-			
-			Object[] t = queue.query(new FormalField(String.class),new FormalField(String.class));
-			System.out.println(t[0] + ": " + t[1]);
-			String message = input.readLine();
-			if(message.equals("start")&&isHost) {
-				queue.put("start");
-			}
-			queue.put(name,message);
-			
-		}
 
-	}
 	
-	public static void connectToHost() throws InterruptedException {
-		try {
-			queue = new RemoteSpace("tcp://"+IP+":9001/queue?keep");
-			System.out.println("connected");
-			queue.put("join", "name");
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		
-	}
-	
-	public static void connectToChannels(){
-		
-		try {
-			
-			//uri to the two communication channels
-			String uriM = "tcp://"+IP+":9001/"+name+"_movement?keep";
-			String uriP ="tcp://"+IP+":9001/"+name+"_position?keep";
-			
-			position = new RemoteSpace(uriP);
-			movement=new RemoteSpace(uriM);
-			
-			
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	class sendInput implements Runnable {
 		char lastInput;
@@ -143,12 +100,14 @@ public class PlayerInGame {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers = 2;
+		private RemoteSpace position;
 
-	    public DrawUpdate(int numPlayers) {
-	    	numPlayers = numPlayers;
+	    public DrawUpdate(int numPlayers,RemoteSpace position) {
+	    	this.numPlayers = numPlayers;
+	    	this.position=position;
 	    	
-	    	formerPosX = new int[numPlayers];
-	    	formerPosY = new int[numPlayers];
+	    	this.formerPosX = new int[numPlayers];
+	    	this.formerPosY = new int[numPlayers];
 	    	
 	    	for(int i = 0; i < numPlayers; i++) {
 	  //  		formerPosX[i] = startPosX[i];
@@ -164,11 +123,20 @@ public class PlayerInGame {
 	    	int playerPosy[] = new int[numPlayers];
 			
 	    	while(true) {
-	    		for(int i = 0; i < numPlayers; i++){
-	    			
-	    			//get from sequential Space of player i which is pushed from host in that order
-	    			//playerInfo[i] = get.nextTuple(int);
-	    		}
+	    		try {
+					for(int i = 0; i < numPlayers; i++){
+						
+						Object[] t = position.get(new FormalField(Integer.class),new FormalField(Integer.class));
+						
+						playerPosx[i]=(int) t[0];
+						playerPosy[i]=(int) t[1];
+						//get from sequential Space of player i which is pushed from host in that order
+						//playerInfo[i] = get.nextTuple(int);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    		//draw lines from formerPos to newPos for all players
 	    		//delete and update circles to newPos
 	    		//formerPos = newPos
@@ -177,6 +145,8 @@ public class PlayerInGame {
 	       }
 
 	   }
+
+	
 	}
 
 

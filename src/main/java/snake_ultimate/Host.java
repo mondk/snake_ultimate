@@ -81,9 +81,7 @@ try {
 					}
 					//move player
 					p.move();
-					
-					//tranfer position to players
-					p.posistion.put("new_position",p.x,p.y);
+				
 					
 					//update map
 					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
