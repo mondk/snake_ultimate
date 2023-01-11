@@ -39,17 +39,19 @@ try {
 			repository.addGate(gateUri);
 
 			// queuing players 
-			while (queue.query(new ActualField("start"))==null) {
+			while (queue.queryp(new ActualField("start"))==null) {
+			
 				
-				
-				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class));
+				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
 					players.add(new PlayerInfo((String)p[1]));
+					System.out.println("Joined");
 				}
 			}
 			
 			//creating tupleSpaces
 			for(PlayerInfo p:players) {
+				queue.put("begin");
 				repository.add(p+"_positions", p.posistion);
 				repository.add(p+"_movement", p.movement);
 			}
@@ -96,7 +98,7 @@ try {
 	}
 	
 	//check player collision
-	public void checkCollision(ArrayList<PlayerInfo> players2) {
+	public void checkCollision(ArrayList<PlayerInfo> players) {
 		for(PlayerInfo p: players) {
 			
 		}
@@ -108,8 +110,8 @@ try {
 		String name;
 		SequentialSpace posistion;
 		SequentialSpace movement;
-		double forceX = 1;
-		double forceY =1;
+		double forceX;
+		double forceY;
 		double force = 5;
 		int x;
 		int y;
@@ -119,6 +121,8 @@ try {
 			this.angle=0;
 			this.posistion = new SequentialSpace();
 			this.movement = new SequentialSpace();
+			this.forceX = 1;
+			this.forceY=1;
 		}
 		public void decreaseAngle() {
 			// TODO Auto-generated method stub
