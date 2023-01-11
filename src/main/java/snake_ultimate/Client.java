@@ -72,7 +72,7 @@ public class Client {
 					System.out.println("Game is starting...");
 					break;
 				}
-				Object[] t = chat.get(new FormalField(String.class),new FormalField(String.class));
+				Object[] t = chat.query(new FormalField(String.class),new FormalField(String.class));
 				System.out.println(t[0] + ": " + t[1]);
 				
 			}			
