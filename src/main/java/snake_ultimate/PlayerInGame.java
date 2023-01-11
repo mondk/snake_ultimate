@@ -1,34 +1,103 @@
 package snake_ultimate;
 
-public class PlayerInGame {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.UnknownHostException;
 
-	public static void main(String[] args) {
-		boolean gameInProgress = true;
-		//thread method for sending movement
-		//thread method for updating graphic
-		while(gameInProgress) {
+import javax.imageio.IIOException;
+
+import org.jspace.RemoteSpace;
+import org.jspace.SequentialSpace;
+import org.jspace.*;
+
+public class PlayerInGame {
+	
+	private static String name;
+	private static RemoteSpace position;
+	private static RemoteSpace movement;
+	private static RemoteSpace queue;
+	private static String IP;
+	public static boolean isHost=false;
+	
+	PlayerInGame(String name,String IP){
+		this.name=name;
+		this.IP=IP;
+		
+	}
+
+	public static void main(String[] args) throws InterruptedException, IOException {
+		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		connectToHost();
+		
+		//chat before game
+		while(true) {
 			
-			
+			Object[] t = queue.query(new FormalField(String.class),new FormalField(String.class));
+			System.out.println(t[0] + ": " + t[1]);
+			String message = input.readLine();
+			if(message.equals("start")&&isHost) {
+				queue.put("start");
+			}
+			queue.put(name,message);
 			
 		}
 
 	}
 	
+	public static void connectToHost() throws InterruptedException {
+		try {
+			queue = new RemoteSpace("tcp://"+IP+":9001/queue?keep");
+			System.out.println("connected");
+			queue.put("join", "name");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
+	
+	public static void connectToChannels(){
+		
+		try {
+			
+			//uri to the two communication channels
+			String uriM = "tcp://"+IP+":9001/"+name+"_movement?keep";
+			String uriP ="tcp://"+IP+":9001/"+name+"_position?keep";
+			
+			position = new RemoteSpace(uriP);
+			movement=new RemoteSpace(uriM);
+			
+			
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	class sendInput implements Runnable {
 		char lastInput;
 		char newInput;
-		public sendInput() {
-			lastInput = ' ';
+		private RemoteSpace movement;
+		public sendInput(RemoteSpace movement) {
+			this.lastInput = ' ';
+			this.movement=movement;
 		}
 		
 		public void run() {
 			//send nothing
-			
+			try {
 			while(true) {
 				//newInput = det du holder inde nu, hvis ikke a eller d: så ' '
 				if(lastInput == ' ') {
 					if(newInput == 'a') {
 						//put.channel('a')
+						movement.put('a');
 					}
 					else if(newInput == 'd') {
 						//put.channel('d')
@@ -64,7 +133,12 @@ public class PlayerInGame {
 			}
 			
 			
+			
+		}catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
 	}
 
 	class DrawUpdate implements Runnable {
@@ -102,7 +176,8 @@ public class PlayerInGame {
 	       }
 
 	   }
+	}
 
 
 
-}
+
