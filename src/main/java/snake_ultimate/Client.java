@@ -82,7 +82,9 @@ public class Client {
 			System.out.println("Connecting to chat space " + uriP + "...");
 			RemoteSpace position = new RemoteSpace(uriM);
 			RemoteSpace movement = new RemoteSpace(uriP);
-
+			
+			new Thread(new PlayerInGame(2,name,position,movement)).start();
+			
 			while(true) {
 				
 			}

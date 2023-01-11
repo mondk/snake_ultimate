@@ -115,6 +115,9 @@ public class PlayerInGame implements Runnable{
 	    	this.formerPosX = new int[numPlayers];
 	    	this.formerPosY = new int[numPlayers];
 	    	
+	        setPreferredSize(new Dimension(1000, 1000));
+	        setBackground(Color.white);
+	    	
 	    	for(int i = 0; i < numPlayers; i++) {
 	  //  		formerPosX[i] = startPosX[i];
 	  //   		formerPosY[i] = startPosY[i];
@@ -160,11 +163,8 @@ public class PlayerInGame implements Runnable{
 	    		//formerPos = newPos
 	    }
 
+	}
 
-	       }
-
-	   
-	
 	
 	
     public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
