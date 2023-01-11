@@ -75,7 +75,13 @@ public class Client {
 				Object[] t = chat.query(new FormalField(String.class),new FormalField(String.class));
 				System.out.println(t[0] + ": " + t[1]);
 				
-			}			
+			}	
+			String uriM = "tcp://10.209.118.64:9001/"+name+"_movement?keep";
+			String uriP = "tcp://10.209.118.64:9001/"+name+"_positions?keep";
+			System.out.println("Connecting to chat space " + uriM + "...");
+			System.out.println("Connecting to chat space " + uriP + "...");
+			RemoteSpace position = new RemoteSpace(uriM);
+			RemoteSpace movement = new RemoteSpace(uriP);
 
 
 		} catch (UnknownHostException e) {
