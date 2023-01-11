@@ -1,5 +1,8 @@
 package snake_ultimate;
 
+import java.awt.*;
+import javax.swing.JPanel;
+
 public class PlayerInGame {
 
 	public static void main(String[] args) {
@@ -67,7 +70,7 @@ public class PlayerInGame {
 		}
 	}
 
-	class DrawUpdate implements Runnable {
+	class DrawUpdate extends JPanel implements Runnable {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers;
@@ -83,12 +86,13 @@ public class PlayerInGame {
 	  //   		formerPosY[i] = startPosY[i];
 	    	}
 	    	
-	    	//draw Start Pos
+	  //draw Start Pos
 	    	
 	    }
 
 	    public void run() {
 	    	int playerInfo[] = new int[numPlayers];
+			
 	    	while(true) {
 	    		for(int i = 0; i < numPlayers; i++){
 	    			//get from sequential Space of player i which is pushed from host in that order
