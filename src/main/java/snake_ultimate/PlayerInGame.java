@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.awt.*;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.imageio.IIOException;
 import org.jspace.*;
 
@@ -143,6 +143,9 @@ public class PlayerInGame {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers = 2;
+		
+		Graphics graphics;
+		public Image image;
 
 	    public DrawUpdate(int numPlayers) {
 	    	numPlayers = numPlayers;
@@ -168,16 +171,23 @@ public class PlayerInGame {
 	    			
 	    			//get from sequential Space of player i which is pushed from host in that order
 	    			//playerInfo[i] = get.nextTuple(int);
+	    			drawCircle(graphics,playerPosx[i],playerPosy[i],5);
 	    		}
+	    		
+	    		
+	    	}
 	    		//draw lines from formerPos to newPos for all players
 	    		//delete and update circles to newPos
 	    		//formerPos = newPos
-	    	}
+	    }
 
-	       }
-
-	   }
 	}
+	
+    public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
+        cg.drawOval(xCenter-r, yCenter-r, 2*r, 2*r);
+    }//end drawCircle
+}
+	
 
 
 
