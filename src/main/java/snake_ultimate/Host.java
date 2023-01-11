@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
+import java.util.*;
 
 import org.jspace.ActualField;
 import org.jspace.FormalField;
@@ -100,6 +100,13 @@ try {
 				
 				//collision is checked for all players
 				checkCollision(players);
+				
+				for(PlayerInfo p: players) {
+					for(PlayerInfo q: players) {
+						p.posistion.put(q.x,q.y);
+					}
+				}
+				Thread.sleep(1000);
 				
 			}
 

@@ -142,7 +142,7 @@ public class PlayerInGame {
 	class DrawUpdate extends JPanel implements Runnable {
 		int formerPosX[];
 		int formerPosY[];
-		int numPlayers;
+		int numPlayers = 2;
 
 	    public DrawUpdate(int numPlayers) {
 	    	numPlayers = numPlayers;
@@ -160,10 +160,12 @@ public class PlayerInGame {
 	    }
 
 	    public void run() {
-	    	int playerInfo[] = new int[numPlayers];
+	    	int playerPosx[] = new int[numPlayers];
+	    	int playerPosy[] = new int[numPlayers];
 			
 	    	while(true) {
 	    		for(int i = 0; i < numPlayers; i++){
+	    			
 	    			//get from sequential Space of player i which is pushed from host in that order
 	    			//playerInfo[i] = get.nextTuple(int);
 	    		}
