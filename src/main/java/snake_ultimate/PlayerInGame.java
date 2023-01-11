@@ -96,7 +96,7 @@ public class PlayerInGame implements Runnable{
 	}
 	}
 
-	class DrawUpdate extends JPanel implements Runnable {
+	class DrawUpdate implements Runnable {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers = 2;
@@ -104,19 +104,12 @@ public class PlayerInGame implements Runnable{
 		private RemoteSpace position;
 
 		
-
-		Graphics graphics;
-		public Image image;
-		
 	    public DrawUpdate(int numPlayers,RemoteSpace position) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
 	    	
 	    	this.formerPosX = new int[numPlayers];
 	    	this.formerPosY = new int[numPlayers];
-	    	
-	        setPreferredSize(new Dimension(1000, 1000));
-	        setBackground(Color.white);
 	    	
 	    	for(int i = 0; i < numPlayers; i++) {
 	  //  		formerPosX[i] = startPosX[i];
@@ -152,7 +145,6 @@ public class PlayerInGame implements Runnable{
 	    			
 	    			//get from sequential Space of player i which is pushed from host in that order
 	    			//playerInfo[i] = get.nextTuple(int);
-	    			drawCircle(graphics,playerPosx[i],playerPosy[i],5);
 	    		}
 	    		
 	    		
