@@ -16,13 +16,15 @@ public class Client {
 			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 			
 			System.out.println("Hello and Welcome to ultimate Snek!");
-			System.out.println("Type \"Host\" if you want to host a game,");
-			System.out.println("type \"Join\" if you want to join a game.");
-			System.out.println("Or type \"Exit\" to close the game");
+
 			
 			String option = input.readLine();
 			
 			while(true) {
+				System.out.println("Type \"Host\" if you want to host a game,");
+				System.out.println("type \"Join\" if you want to join a game.");
+				System.out.println("Or type \"Exit\" to close the game");
+				
 				if(option.equals("Host")) {
 					//hostgame(uri);
 					//isHost = true;
@@ -33,6 +35,9 @@ public class Client {
 				}
 				else if(option.equals("Exit")) {
 					break;
+				}
+				else {
+					System.out.println("Uknown comand!");
 				}
 			}
 			
