@@ -24,10 +24,12 @@ public class Client {
 			
 			while(true) {
 				if(option.equals("Host")) {
-					
+					//hostgame(uri);
+					//isHost = true;
+					//joingame(uri);
 				}
 				else if(option.equals("Join")) {
-					
+					//joingame(uri);
 				}
 				else if(option.equals("Exit")) {
 					break;

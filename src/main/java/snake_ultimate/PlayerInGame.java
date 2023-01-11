@@ -49,7 +49,7 @@ public class PlayerInGame {
 						//get.channel('a')
 					}
 				}
-				else { //lastInput == d
+				else { //lastInput == 'd'
 					if(newInput == 'a') {
 						//put.channel('a')
 						//get.channel('d')
@@ -68,14 +68,23 @@ public class PlayerInGame {
 	}
 
 	class DrawUpdate implements Runnable {
-		int formerPosX;
-		int formerPosY;
+		int formerPosX[];
+		int formerPosY[];
 		int numPlayers;
 
 	    public DrawUpdate(int numPlayers) {
-	//    	formerPosX = startPosX for player X;
-	//		formerPosY = startPos Y for player X;
 	    	numPlayers = numPlayers;
+	    	
+	    	formerPosX = new int[numPlayers];
+	    	formerPosY = new int[numPlayers];
+	    	
+	    	for(int i = 0; i < numPlayers; i++) {
+	  //  		formerPosX[i] = startPosX[i];
+	  //   		formerPosY[i] = startPosY[i];
+	    	}
+	    	
+	    	//draw Start Pos
+	    	
 	    }
 
 	    public void run() {
