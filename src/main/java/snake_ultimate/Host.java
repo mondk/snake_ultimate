@@ -72,9 +72,13 @@ try {
 					//move player
 					p.move();
 					
-					
+					//tranfer position to players
+					p.posistion.put("new_position",p.x,p.y);
 					
 				}
+				
+				
+				
 				
 				//collision is checked for all players
 				checkCollision(players);
