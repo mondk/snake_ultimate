@@ -16,6 +16,7 @@ public class Host implements Runnable{
 
 	private ArrayList<PlayerInfo> players;
 	private String uri;
+	byte map[][];
 	Host(String uri){
 		this.uri=uri;
 		this.players=new ArrayList<>();
@@ -56,15 +57,22 @@ try {
 				repository.add(p+"_movement", p.movement);
 			}
 			
+			map = new byte[1000][1000];
+			for(int m = 0; m < 1000; m++) {
+				for(int n = 0; n < 1000; n++) {
+					map[m][n] = 0;
+				}
+			}
+			
 			//GameLoop
 			while(true) {
 				//update player position
 				for(PlayerInfo p:players) {
-					char m;
+					char input;
 					Object[] t = p.movement.query(new FormalField(char.class));
 					if(t!=null) {
-						m=(char) t[0];
-						if(m=='a') {
+						input=(char) t[0];
+						if(input=='a') {
 							p.increaseAngle();
 						}
 						else {
@@ -77,6 +85,14 @@ try {
 					//tranfer position to players
 					p.posistion.put("new_position",p.x,p.y);
 					
+					//update map
+					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
+						for(int n = -p.thickness; n <= p.thickness/2; n++) {
+							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
+								map[p.x + m][p.y + n] = p.playernumber;
+							}
+						}
+					}
 				}
 				
 				
@@ -100,19 +116,30 @@ try {
 	//check player collision
 	public void checkCollision(ArrayList<PlayerInfo> players) {
 		for(PlayerInfo p: players) {
-			
+			for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
+				for(int n = -p.thickness; n <= p.thickness/2; n++) {
+					if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
+						if(map[p.x + m][p.y + n] != 0 && map[p.x +m][p.y + n] != p.playernumber) {
+							//dead;
+						}
+						//cannot colide with itself
+					}
+				}
+			}
 		}
 	}
 	
 	
 	public class PlayerInfo{
 		double angle;
+		byte playernumber;
 		String name;
 		SequentialSpace posistion;
 		SequentialSpace movement;
 		double forceX;
 		double forceY;
 		double force = 5;
+		int thickness;
 		int x;
 		int y;
 		

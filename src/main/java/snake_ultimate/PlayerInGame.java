@@ -1,9 +1,16 @@
 package snake_ultimate;
 
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
+=======
+import java.awt.*;
+import javax.swing.JPanel;
+
+public class PlayerInGame {
+>>>>>>> 5cc3a9d1aaeddd52c90b928a0a9a9d264e6e252c
 
 import javax.imageio.IIOException;
 
@@ -141,7 +148,7 @@ public class PlayerInGame {
 	}
 	}
 
-	class DrawUpdate implements Runnable {
+	class DrawUpdate extends JPanel implements Runnable {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers;
@@ -157,12 +164,13 @@ public class PlayerInGame {
 	  //   		formerPosY[i] = startPosY[i];
 	    	}
 	    	
-	    	//draw Start Pos
+	  //draw Start Pos
 	    	
 	    }
 
 	    public void run() {
 	    	int playerInfo[] = new int[numPlayers];
+			
 	    	while(true) {
 	    		for(int i = 0; i < numPlayers; i++){
 	    			//get from sequential Space of player i which is pushed from host in that order
