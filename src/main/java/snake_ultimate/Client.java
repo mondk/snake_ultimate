@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Queue;
 
 public class Client {
 	static String IP;
@@ -86,19 +87,22 @@ public class Client {
 				System.out.println(t[0] + ": " + t[1]);
 				
 			}	
+			
 			String uriM = "tcp://"+IP+":9001/"+name+"_movement?keep";
 			String uriP = "tcp://"+IP+":9001/"+name+"_positions?keep";
+			RemoteSpace position = new RemoteSpace(uriP);
+			RemoteSpace movement = new RemoteSpace(uriM);
 			System.out.println("Connecting to chat space " + uriM + "...");
 			System.out.println("Connecting to chat space " + uriP + "...");
-			RemoteSpace position = new RemoteSpace(uriM);
-			RemoteSpace movement = new RemoteSpace(uriP);
 			
-			movement.put("a");
-			//new Thread(new PlayerInGame(2,name,position,movement)).start();
 			
-			while(true) {
-				
-			}
+			
+			
+			//System.out.println(movement.query(new FormalField(String.class))[0]);
+			
+			new Thread(new PlayerInGame(2,name,position,movement)).start();
+			
+			
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

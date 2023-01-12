@@ -5,16 +5,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.*;
 import javax.imageio.IIOException;
 import org.jspace.*;
 
+
+
 public class PlayerInGame implements Runnable{
 	
 	private static String name;
-	private static RemoteSpace position;
-	private static RemoteSpace movement;
+	public static RemoteSpace position;
+	public static RemoteSpace movement;
 	private int numOfPlayers;
+	public String newInput;
+	public String lastInput;
 	
 	PlayerInGame(int numberOfPlayers,String name,RemoteSpace position,RemoteSpace movement){
 		this.name=name;
@@ -27,76 +34,77 @@ public class PlayerInGame implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		//new Thread(new sendInput(movement)).start();
-		new Thread(new DrawUpdate(numOfPlayers, position)).start();
+		//new Thread(new DrawUpdate(numOfPlayers, this.position)).start();
+		JFrame frame = new JFrame("Test");
+		//frame.add(new DrawUpdate(numOfPlayers, movement));
+		frame.setTitle("CurveTest");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.addKeyListener(new Control(movement));
+		frame.setVisible(true);
+		frame.pack();
+		frame.setLocationRelativeTo(null);
+		
 		
 	}
 
 
 	
+	public class Control implements KeyListener{
 
-	
-	class sendInput implements Runnable {
-		char lastInput;
-		char newInput;
-		private RemoteSpace movement;
-		public sendInput(RemoteSpace movement) {
-			this.lastInput = ' ';
+		RemoteSpace movement;
+		
+		Control(RemoteSpace movement){
 			this.movement=movement;
 		}
-		
-		public void run() {
-			//send nothing
-			try {
-			while(true) {
-				//newInput = det du holder inde nu, hvis ikke a eller d: så ' '
-				if(lastInput == ' ') {
-					if(newInput == 'a') {
-						//put.channel('a')
-						movement.put('a');
-					}
-					else if(newInput == 'd') {
-						//put.channel('d')
-					}
-					else {
-						//nothing
-					}
-				}
-				else if(lastInput == 'a') {
-					if(newInput == 'a') {
-						//nothing
-					}
-					else if(newInput == 'd') {
-						//put.channel('d')
-						//get.channel('a')
-					}
-					else {
-						//get.channel('a')
-					}
-				}
-				else { //lastInput == 'd'
-					if(newInput == 'a') {
-						//put.channel('a')
-						//get.channel('d')
-					}
-					else if(newInput == 'd') {
-						//nothing
-					}
-					else {
-						//get.channel('d')
-					}
-				}
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+				input("a");
+			}
+			else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				input("d");
 			}
 			
-			
-			
-		}catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-	}
-	}
 
-	class DrawUpdate implements Runnable {
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+				input(" ");
+			}
+			
+			else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				input(" ");
+			
+		}
+			
+		
+		
+	}
+		public void input(String i) {
+			try {
+				this.movement.getp(new FormalField(String.class));
+				this.movement.put(i);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	}
+	}
+	
+
+
+	class DrawUpdate extends JPanel implements Runnable {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers = 2;
@@ -104,12 +112,19 @@ public class PlayerInGame implements Runnable{
 		private RemoteSpace position;
 
 		
+
+		Graphics graphics;
+		public Image image;
+		
 	    public DrawUpdate(int numPlayers,RemoteSpace position) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
 	    	
 	    	this.formerPosX = new int[numPlayers];
 	    	this.formerPosY = new int[numPlayers];
+	    	
+	        setPreferredSize(new Dimension(1000, 1000));
+	        setBackground(Color.white);
 	    	
 	    	for(int i = 0; i < numPlayers; i++) {
 	  //  		formerPosX[i] = startPosX[i];
@@ -145,6 +160,7 @@ public class PlayerInGame implements Runnable{
 	    			
 	    			//get from sequential Space of player i which is pushed from host in that order
 	    			//playerInfo[i] = get.nextTuple(int);
+	    			drawCircle(graphics,playerPosx[i],playerPosy[i],5);
 	    		}
 	    		
 	    		
@@ -163,7 +179,7 @@ public class PlayerInGame implements Runnable{
         cg.drawOval(xCenter-r, yCenter-r, 2*r, 2*r);
     }//end drawCircle
 }
-	
+
 
 
 
