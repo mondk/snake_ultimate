@@ -27,7 +27,7 @@ public class PlayerInGame implements Runnable{
 	public void run() {
 		// TODO Auto-generated method stub
 		//new Thread(new sendInput(movement)).start();
-		new Thread(new DrawUpdate(numOfPlayers, position)).start();
+		new Thread(new DrawThread(numOfPlayers, position)).start();
 		
 	}
 
@@ -96,7 +96,7 @@ public class PlayerInGame implements Runnable{
 	}
 	}
 
-	class DrawUpdate implements Runnable {
+	class DrawThread implements Runnable {
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers = 2;
@@ -104,7 +104,7 @@ public class PlayerInGame implements Runnable{
 		private RemoteSpace position;
 
 		
-	    public DrawUpdate(int numPlayers,RemoteSpace position) {
+	    public DrawThread(int numPlayers,RemoteSpace position) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
 	    	
@@ -133,8 +133,7 @@ public class PlayerInGame implements Runnable{
 						
 						playerPosx[i]=(int) t[0];
 						playerPosy[i]=(int) t[1];
-						//get from sequential Space of player i which is pushed from host in that order
-						//playerInfo[i] = get.nextTuple(int);
+							
 					}
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -142,9 +141,7 @@ public class PlayerInGame implements Runnable{
 				}
 
 	    		for(int i = 0; i < numPlayers; i++){
-	    			
-	    			//get from sequential Space of player i which is pushed from host in that order
-	    			//playerInfo[i] = get.nextTuple(int);
+
 	    		}
 	    		
 	    		
@@ -157,6 +154,8 @@ public class PlayerInGame implements Runnable{
 
 	}
 
+	
+	
 	
 	
     public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
