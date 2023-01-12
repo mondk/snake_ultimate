@@ -52,18 +52,23 @@ try {
 			
 			//creating tupleSpaces
 			for(PlayerInfo p:players) {
-				queue.put("begin");
-				repository.add(p+"_positions", p.posistion);
-				repository.add(p+"_movement", p.movement);
+				
+				repository.add(p.name+"_positions", p.posistion);
+				repository.add(p.name+"_movement", p.movement);
+				
 			}
-			
-			map = new byte[1000][1000];
-			for(int m = 0; m < 1000; m++) {
-				for(int n = 0; n < 1000; n++) {
-					map[m][n] = 0;
+			queue.put("begin");
+
+			//players.get(0).movement.put("a");
+			String we ="e";
+			while(true) {
+				System.out.println(players.get(0).name+": "+players.get(0).movement.query(new FormalField(String.class))[0]);
+				if(we.equals("er")){
+					break;
 				}
 			}
 			
+
 			//GameLoop
 			while(true) {
 				//update player position
