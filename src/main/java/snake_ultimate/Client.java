@@ -8,10 +8,11 @@ import org.jspace.RemoteSpace;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class Client {
-
+	static String IP;
 	public static void main(String[] args) throws InterruptedException {
 
 		try {
@@ -21,20 +22,32 @@ public class Client {
 			System.out.println();
 			System.out.print("Please enter a name:");
 			String name = input.readLine();
+			System.out.println();
 			boolean isHost = false;
 			
-			
+			System.out.print("Write IP address or enter for default IP: ");
+			String option=input.readLine();
+			if(option.isEmpty()){
+				IP = InetAddress.getLocalHost().getHostAddress();
+			}
+			else if (option.equals("j")){
+				IP="10.209.118.64";
+				
+				
+			}
+			String uri = "tcp://"+IP+":9001/queue?keep";
 			while(true) {
 				System.out.println("Type \"Host\" if you want to host a game,");
 				System.out.println("type \"Join\" if you want to join a game.");
 				System.out.println("Or type \"Exit\" to close the game");
-				String option = input.readLine();
+				option = input.readLine();
 				if(option.equals("Host")) {
-					new Thread(new Host("tcp://10.209.118.64:9001/?keep")).start();
+				
+					new Thread(new Host("tcp://"+IP+":9001/?keep")).start();
 					//isHost = true;
 					
 					isHost=true;
-					Thread.sleep(100);
+					Thread.sleep(200);
 					break;
 				}
 				else if(option.equals("Join")) {
@@ -50,10 +63,7 @@ public class Client {
 			
 			// Set the URI of the chat space
 			// Default value
-			
-			String uri = "tcp://10.209.118.64:9001/queue?keep";
-			
-
+		
 			// Connect to the remote chat space 
 			System.out.println("Connecting to chat space " + uri + "...");
 			RemoteSpace chat = new RemoteSpace(uri);
@@ -76,14 +86,15 @@ public class Client {
 				System.out.println(t[0] + ": " + t[1]);
 				
 			}	
-			String uriM = "tcp://10.209.118.64:9001/"+name+"_movement?keep";
-			String uriP = "tcp://10.209.118.64:9001/"+name+"_positions?keep";
+			String uriM = "tcp://"+IP+":9001/"+name+"_movement?keep";
+			String uriP = "tcp://"+IP+":9001/"+name+"_positions?keep";
 			System.out.println("Connecting to chat space " + uriM + "...");
 			System.out.println("Connecting to chat space " + uriP + "...");
 			RemoteSpace position = new RemoteSpace(uriM);
 			RemoteSpace movement = new RemoteSpace(uriP);
 			
-			new Thread(new PlayerInGame(2,name,position,movement)).start();
+			movement.put("a");
+			//new Thread(new PlayerInGame(2,name,position,movement)).start();
 			
 			while(true) {
 				
