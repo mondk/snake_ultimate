@@ -87,7 +87,7 @@ try {
 					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
 						for(int n = -p.thickness; n <= p.thickness/2; n++) {
 							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
-								map[p.x + m][p.y + n] = p.playernumber;
+								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
 							}
 						}
 					}
