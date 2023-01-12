@@ -53,8 +53,8 @@ try {
 			//creating tupleSpaces
 			for(PlayerInfo p:players) {
 				queue.put("begin");
-				repository.add(p+"_positions", p.posistion);
-				repository.add(p+"_movement", p.movement);
+				repository.add(p.name+"_positions", p.posistion);
+				repository.add(p.name+"_movement", p.movement);
 			}
 			
 			map = new byte[1000][1000];
