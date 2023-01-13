@@ -78,7 +78,7 @@ public class Client {
 					chat.put("start");
 				}
 				chat.put(name, message);
-				Object[] b = chat.getp(new ActualField("begin"));
+				Object[] b = chat.queryp(new ActualField("begin"));
 				if(b!=null) {
 					System.out.println("Game is starting...");
 					break;
