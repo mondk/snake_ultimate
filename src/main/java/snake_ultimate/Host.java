@@ -37,7 +37,11 @@ try {
 			String gateUri = "tcp://" + myUri.getHost() + ":" + myUri.getPort() +  "?keep" ;
 			System.out.println("Opening repository gate at " + gateUri + "...");
 			repository.addGate(gateUri);
+
+			// queuing players 
 			while (queue.queryp(new ActualField("start"))==null) {
+			
+
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
 					players.add(new PlayerInfo((String)p[1]));
@@ -55,6 +59,7 @@ try {
 			queue.put("begin");
 
 			//players.get(0).movement.put("a");
+<<<<<<< HEAD
 			String we ="e";
 			while(true) {
 				System.out.println(players.get(0).name+": "+players.get(0).movement.query(new FormalField(String.class))[0]);
@@ -62,11 +67,24 @@ try {
 					break;
 				}
 			}
+=======
+			//String we ="e";
+			//while(true) {
+				//System.out.println(players.get(0).name+": "+players.get(0).movement.query(new FormalField(String.class))[0]);
+				//if(we.equals("er")){
+					//break;
+				//}
+		//	}
+>>>>>>> origin/Jasper
 			
 
 			//GameLoop
 			while(true) {
 				//update player position
+<<<<<<< HEAD
+=======
+				Thread.sleep(300);
+>>>>>>> origin/Jasper
 				for(PlayerInfo p:players) {
 					String input;
 					Object[] t = p.movement.query(new FormalField(String.class));
@@ -84,6 +102,7 @@ try {
 				
 					
 					//update map
+<<<<<<< HEAD
 					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
 						for(int n = -p.thickness; n <= p.thickness/2; n++) {
 							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
@@ -91,20 +110,32 @@ try {
 							}
 						}
 					}
+=======
+				
+				
+>>>>>>> origin/Jasper
 				}
 				
 				
 				
 				
 				//collision is checked for all players
+<<<<<<< HEAD
 				checkCollision(players);
+=======
+				//checkCollision(players);
+>>>>>>> origin/Jasper
 				
 				for(PlayerInfo p: players) {
 					for(PlayerInfo q: players) {
 						p.posistion.put(q.x,q.y);
 					}
 				}
+<<<<<<< HEAD
 				Thread.sleep(1000);
+=======
+				
+>>>>>>> origin/Jasper
 				
 			}
 
