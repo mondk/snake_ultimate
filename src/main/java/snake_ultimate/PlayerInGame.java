@@ -206,8 +206,6 @@ public class PlayerInGame implements Runnable{
 					e.printStackTrace();
 				}
 		}
-
-	
 	}
 }
 	

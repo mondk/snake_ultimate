@@ -29,7 +29,6 @@ try {
 		
 			// Create a repository 
 			SpaceRepository repository = new SpaceRepository();
-			 
 			SequentialSpace queue = new SequentialSpace();
 
 			repository.add("queue", queue);
@@ -38,11 +37,7 @@ try {
 			String gateUri = "tcp://" + myUri.getHost() + ":" + myUri.getPort() +  "?keep" ;
 			System.out.println("Opening repository gate at " + gateUri + "...");
 			repository.addGate(gateUri);
-
-			// queuing players 
 			while (queue.queryp(new ActualField("start"))==null) {
-			
-				
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
 					players.add(new PlayerInfo((String)p[1]));

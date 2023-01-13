@@ -32,10 +32,9 @@ public class Client {
 				IP = InetAddress.getLocalHost().getHostAddress();
 			}
 			else if (option.equals("j")){
-				IP="10.209.118.64";
-				
-				
+				IP="10.209.118.64";	
 			}
+			
 			String uri = "tcp://"+IP+":9001/queue?keep";
 			while(true) {
 				System.out.println("Type \"Host\" if you want to host a game,");
@@ -46,7 +45,6 @@ public class Client {
 				
 					new Thread(new Host("tcp://"+IP+":9001/?keep")).start();
 					//isHost = true;
-					
 					isHost=true;
 					Thread.sleep(200);
 					break;
@@ -70,6 +68,7 @@ public class Client {
 			RemoteSpace chat = new RemoteSpace(uri);
 
 			chat.put("join", name,1);
+	
 			// Keep sending whatever the user types
 			System.out.println("Start chatting...");
 			while(true) {
