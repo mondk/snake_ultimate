@@ -72,7 +72,7 @@ try {
 			//GameLoop
 			while(true) {
 				//update player position
-				Thread.sleep(300);
+				
 				for(PlayerInfo p:players) {
 					String input;
 					Object[] t = p.movement.query(new FormalField(String.class));
@@ -88,9 +88,9 @@ try {
 					//move player
 					p.move();
 				
-					
+					System.out.println(p.x+" "+p.y);
 					//update map
-				
+					Thread.sleep(300);
 				
 				}
 				
