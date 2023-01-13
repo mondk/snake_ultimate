@@ -105,7 +105,7 @@ try {
 						p.posistion.put(q.x,q.y);
 					}
 				}
-				Thread.sleep(1000);
+				
 				
 			}
 
