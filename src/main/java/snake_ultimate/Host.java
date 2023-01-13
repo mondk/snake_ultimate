@@ -40,7 +40,6 @@ try {
 
 			// queuing players 
 			while (queue.queryp(new ActualField("start"))==null) {
-			
 
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
@@ -51,7 +50,6 @@ try {
 			
 			//creating tupleSpaces
 			for(PlayerInfo p:players) {
-				
 				repository.add(p.name+"_positions", p.posistion);
 				repository.add(p.name+"_movement", p.movement);
 				
@@ -59,32 +57,16 @@ try {
 			queue.put("begin");
 
 			//players.get(0).movement.put("a");
-<<<<<<< HEAD
 			String we ="e";
-			while(true) {
-				System.out.println(players.get(0).name+": "+players.get(0).movement.query(new FormalField(String.class))[0]);
-				if(we.equals("er")){
-					break;
-				}
-			}
-=======
+
 			//String we ="e";
-			//while(true) {
-				//System.out.println(players.get(0).name+": "+players.get(0).movement.query(new FormalField(String.class))[0]);
-				//if(we.equals("er")){
-					//break;
-				//}
-		//	}
->>>>>>> origin/Jasper
+
 			
 
 			//GameLoop
 			while(true) {
+				System.out.println("her");
 				//update player position
-<<<<<<< HEAD
-=======
-				Thread.sleep(300);
->>>>>>> origin/Jasper
 				for(PlayerInfo p:players) {
 					String input;
 					Object[] t = p.movement.query(new FormalField(String.class));
@@ -99,50 +81,30 @@ try {
 					}
 					//move player
 					p.move();
-				
-<<<<<<< Updated upstream
 					
 					//update map
-<<<<<<< HEAD
-					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
-						for(int n = -p.thickness; n <= p.thickness/2; n++) {
-							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
-								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
-							}
-						}
-					}
-=======
-				
-=======
-					//System.out.println(p.x+" "+p.y);
+//					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
+//						for(int n = -p.thickness; n <= p.thickness/2; n++) {
+//							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
+//								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
+//							}
+//						}
+//					}
+					System.out.println(p.x+" "+p.y);
 					//update map
 					Thread.sleep(50);
->>>>>>> Stashed changes
-				
->>>>>>> origin/Jasper
 				}
 				
 				
 				
 				
 				//collision is checked for all players
-<<<<<<< HEAD
-				checkCollision(players);
-=======
 				//checkCollision(players);
->>>>>>> origin/Jasper
-				
 				for(PlayerInfo p: players) {
 					for(PlayerInfo q: players) {
 						p.posistion.put(q.x,q.y);
 					}
 				}
-<<<<<<< HEAD
-				Thread.sleep(1000);
-=======
-				
->>>>>>> origin/Jasper
-				
 			}
 
 		} catch (InterruptedException e) {

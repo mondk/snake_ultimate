@@ -191,14 +191,9 @@ public class PlayerInGame implements Runnable{
 		public void run(){
 			try {
 				while(true){
-<<<<<<< Updated upstream
-=======
-					
->>>>>>> Stashed changes
 					repaint();
 					for(int i = 0; i < numPlayers; i++) {
 						Object[] t;
-
 						t = position.get(new FormalField(Integer.class),new FormalField(Integer.class));
 						x[i] = (int) t[0];
 						y[i] = (int) t[1];

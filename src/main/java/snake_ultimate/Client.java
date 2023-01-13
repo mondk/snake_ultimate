@@ -38,7 +38,7 @@ public class Client {
 				
 				
 
-			String uri = "tcp://"+IP+":9001/queue?keep";
+			String uri = "tcp://"+IP+":9002/queue?keep";
 			while(true) {
 				System.out.println("Type \"Host\" if you want to host a game,");
 				System.out.println("type \"Join\" if you want to join a game.");
@@ -46,7 +46,7 @@ public class Client {
 				option = input.readLine();
 				if(option.equals("Host")) {
 				
-					new Thread(new Host("tcp://"+IP+":9001/?keep")).start();
+					new Thread(new Host("tcp://"+IP+":9002/?keep")).start();
 					//isHost = true;
 					isHost=true;
 					Thread.sleep(200);
@@ -89,8 +89,8 @@ public class Client {
 				
 			}	
 			
-			String uriM = "tcp://"+IP+":9001/"+name+"_movement?keep";
-			String uriP = "tcp://"+IP+":9001/"+name+"_positions?keep";
+			String uriM = "tcp://"+IP+":9002/"+name+"_movement?keep";
+			String uriP = "tcp://"+IP+":9002/"+name+"_positions?keep";
 			RemoteSpace position = new RemoteSpace(uriP);
 			RemoteSpace movement = new RemoteSpace(uriM);
 			System.out.println("Connecting to chat space " + uriM + "...");
