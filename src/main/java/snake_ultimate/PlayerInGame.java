@@ -191,6 +191,10 @@ public class PlayerInGame implements Runnable{
 		public void run(){
 			try {
 				while(true){
+<<<<<<< Updated upstream
+=======
+					
+>>>>>>> Stashed changes
 					repaint();
 					for(int i = 0; i < numPlayers; i++) {
 						Object[] t;

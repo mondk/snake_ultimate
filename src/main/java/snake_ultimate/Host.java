@@ -100,6 +100,7 @@ try {
 					//move player
 					p.move();
 				
+<<<<<<< Updated upstream
 					
 					//update map
 <<<<<<< HEAD
@@ -112,6 +113,11 @@ try {
 					}
 =======
 				
+=======
+					//System.out.println(p.x+" "+p.y);
+					//update map
+					Thread.sleep(50);
+>>>>>>> Stashed changes
 				
 >>>>>>> origin/Jasper
 				}
@@ -186,6 +192,8 @@ try {
 			this.movement = new SequentialSpace();
 			this.forceX = 1;
 			this.forceY=1;
+			this.x=100;
+			this.y=100;
 		}
 		public void decreaseAngle() {
 			// TODO Auto-generated method stub
