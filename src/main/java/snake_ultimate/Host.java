@@ -73,14 +73,14 @@ try {
 			while(true) {
 				//update player position
 				for(PlayerInfo p:players) {
-					char input;
-					Object[] t = p.movement.query(new FormalField(char.class));
+					String input;
+					Object[] t = p.movement.query(new FormalField(String.class));
 					if(t!=null) {
-						input=(char) t[0];
-						if(input=='a') {
+						input=(String) t[0];
+						if(input.equals("a")) {
 							p.increaseAngle();
 						}
-						else {
+						else if(input.equals("d")){
 							p.decreaseAngle();
 						}
 					}
