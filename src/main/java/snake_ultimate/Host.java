@@ -40,7 +40,6 @@ try {
 
 			// queuing players 
 			while (queue.queryp(new ActualField("start"))==null) {
-			
 
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
@@ -51,7 +50,6 @@ try {
 			
 			//creating tupleSpaces
 			for(PlayerInfo p:players) {
-				
 				repository.add(p.name+"_positions", p.posistion);
 				repository.add(p.name+"_movement", p.movement);
 				
@@ -59,21 +57,13 @@ try {
 			queue.put("begin");
 
 			//players.get(0).movement.put("a");
-
 			String we ="e";
-			while(true) {
-				System.out.println(players.get(0).name+": "+players.get(0).movement.query(new FormalField(String.class))[0]);
-				if(we.equals("er")){
-					break;
-				}
-			}
 
-			
-
+			//String we ="e";
 			//GameLoop
 			while(true) {
+				System.out.println("her");
 				//update player position
-				Thread.sleep(300);
 				for(PlayerInfo p:players) {
 					String input;
 					Object[] t = p.movement.query(new FormalField(String.class));
@@ -88,31 +78,43 @@ try {
 					}
 					//move player
 					p.move();
-				
 					System.out.println(p.x+" "+p.y);
 					//update map
-					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
-						for(int n = -p.thickness; n <= p.thickness/2; n++) {
-							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
-								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
-							}
-						}
-					}
-					Thread.sleep(300);
+//					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
+//						for(int n = -p.thickness; n <= p.thickness/2; n++) {
+//							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
+//								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
+//							}
+//						}
+//					}
+//					Thread.sleep(300);
 
 				//collision is checked for all players
 
-				checkCollision(players);
 				//checkCollision(players);
+					//update map
+//					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
+//						for(int n = -p.thickness; n <= p.thickness/2; n++) {
+//							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
+//								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
+//							}
+//						}
+//					}
+					System.out.println(p.x+" "+p.y);
+					//update map
+					Thread.sleep(20);
+				}
+				
+				
+				
+				
+				//collision is checked for all players
 
 				for(PlayerInfo p: players) {
 					for(PlayerInfo q: players) {
 						p.posistion.put(q.x,q.y);
 					}
 				}
-				Thread.sleep(1000);
-
-				
 			}
 
 		} catch (InterruptedException e) {
@@ -162,6 +164,8 @@ try {
 			this.movement = new SequentialSpace();
 			this.forceX = 1;
 			this.forceY=1;
+			this.x=100;
+			this.y=100;
 		}
 		public void decreaseAngle() {
 			// TODO Auto-generated method stub
