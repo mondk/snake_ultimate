@@ -71,10 +71,6 @@ public class Client {
 			RemoteSpace chat = new RemoteSpace(uri);
 
 			chat.put("join", name,1);
-<<<<<<< HEAD
-	
-=======
->>>>>>> origin/Jasper
 			// Keep sending whatever the user types
 			System.out.println("Start chatting...");
 			while(true) {
