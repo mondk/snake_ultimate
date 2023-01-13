@@ -186,11 +186,14 @@ public class PlayerInGame implements Runnable{
 		
 		 public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
 		     cg.drawOval(xCenter-r, yCenter-r, 2*r, 2*r);
+		     cg.fillOval(xCenter-r, yCenter-r, 2*r, 2*r);
+		     Toolkit.getDefaultToolkit().sync();
 		 }//end drawCircle
 		
 		public void run(){
 			try {
 				while(true){
+					
 					repaint();
 					for(int i = 0; i < numPlayers; i++) {
 						Object[] t;
@@ -206,6 +209,8 @@ public class PlayerInGame implements Runnable{
 					e.printStackTrace();
 				}
 		}
+
+	
 	}
 }
 	
