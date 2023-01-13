@@ -151,11 +151,7 @@ public class PlayerInGame implements Runnable{
 
 		int formerPosX[];
 		int formerPosY[];
-<<<<<<< HEAD
 		int numPlayers = 2;
-=======
-		int numPlayers = 1;
->>>>>>> origin/Jasper
 		int x [] = {100, 266, 633, 900}; //start positions
 		int y [] = {100, 400, 400, 100};
 		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
@@ -190,19 +186,11 @@ public class PlayerInGame implements Runnable{
 		
 		 public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
 		     cg.drawOval(xCenter-r, yCenter-r, 2*r, 2*r);
-<<<<<<< HEAD
-=======
-		     cg.fillOval(xCenter-r, yCenter-r, 2*r, 2*r);
->>>>>>> origin/Jasper
 		 }//end drawCircle
 		
 		public void run(){
 			try {
 				while(true){
-<<<<<<< HEAD
-=======
-					Thread.sleep(300);
->>>>>>> origin/Jasper
 					repaint();
 					for(int i = 0; i < numPlayers; i++) {
 						Object[] t;
@@ -218,11 +206,6 @@ public class PlayerInGame implements Runnable{
 					e.printStackTrace();
 				}
 		}
-<<<<<<< HEAD
-=======
-
-	
->>>>>>> origin/Jasper
 	}
 }
 	
