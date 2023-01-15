@@ -20,6 +20,7 @@ public class Host implements Runnable{
 	Host(String uri){
 		this.uri=uri;
 		this.players=new ArrayList<>();
+		map = new byte[1000][1000];
 	}
 	@Override
 	public void run() {
@@ -62,7 +63,7 @@ try {
 			//String we ="e";
 			//GameLoop
 			while(true) {
-				System.out.println("her");
+				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
 					String input;
@@ -76,36 +77,61 @@ try {
 							p.decreaseAngle();
 						}
 					}
+					
+					p.formerx = p.x;
+					p.formery = p.y;
+					
 					//move player
 					p.move();
-					System.out.println(p.x+" "+p.y);
-					//update map
-//					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
-//						for(int n = -p.thickness; n <= p.thickness/2; n++) {
-//							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
-//								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
-//							}
-//						}
-//					}
-//					Thread.sleep(300);
+			//		System.out.println(p.x+" "+p.y);							
+							for(int m = -p.thickness; m <= p.thickness; m++) {//collision check
+								for(int n = -p.thickness; n <= p.thickness; n++) {
+									if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {
+										byte currentTile = map[p.x + m][p.y + n];
+										if(currentTile != 0 && currentTile != p.playernumber) {
+											System.out.println("Collision");//possible manually draw the circle instead of this automated shit
+										}
+									}
+								}
+							}
+							for(int m = -p.thickness; m <= p.thickness; m++) {//sets old position to be tail
+								for(int n = -p.thickness; n <= p.thickness; n++) {
+									if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {
+										map[p.formerx + m][p.formery + n] = 5;
+									}
+								}
+							}
+							
+							for(int m = -p.thickness; m <= p.thickness; m++) {//sets current position to be ok (since a snake movement is less than 1 head in length)
+								for(int n = -p.thickness; n <= p.thickness; n++) {
+									if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {
+										map[p.x + m][p.y + n] = p.playernumber;
+									}
+								}
+							}
+						
+
 
 				//collision is checked for all players
 
 				//checkCollision(players);
+		//			System.out.println(p.x+" "+p.y);
 					//update map
-//					for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
-//						for(int n = -p.thickness; n <= p.thickness/2; n++) {
+				}
+				
+//				for(PlayerInfo p:players) {
+//					//update map
+//					for(int m = -p.thickness; m <= p.thickness; m++) {
+//						for(int n = -p.thickness; n <= p.thickness; n++) {
 //							if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
-//								map[p.x + m][p.y + n] = p.playernumber; //possible manually draw the circle instead of this automated shit
+//								if(map[p.x + m][p.y + n] != 0 && map[p.x + m][p.y + n] != p.playernumber) {
+//									System.out.println("Collision"); //possible manually draw the circle instead of this automated shit
+//								}
+//								map[p.x + m][p.y+n] = 5;
 //							}
 //						}
 //					}
-					System.out.println(p.x+" "+p.y);
-					//update map
-					Thread.sleep(20);
-				}
-				
-				
+//				}
 				
 				
 				//collision is checked for all players
@@ -128,20 +154,20 @@ try {
 	}
 	
 	//check player collision
-	public void checkCollision(ArrayList<PlayerInfo> players) {
-		for(PlayerInfo p: players) {
-			for(int m = -p.thickness/2; m <= p.thickness/2; m++) {
-				for(int n = -p.thickness; n <= p.thickness/2; n++) {
-					if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
-						if(map[p.x + m][p.y + n] != 0 && map[p.x +m][p.y + n] != p.playernumber) {
-							//dead;
-						}
-						//cannot colide with itself
-					}
-				}
-			}
-		}
-	}
+//	public void checkCollision(ArrayList<PlayerInfo> players) {
+//		for(PlayerInfo p: players) {
+//			for(int m = -p.thickness; m <= p.thickness; m++) {
+//				for(int n = -p.thickness; n <= p.thickness; n++) {
+//					if(Math.ceil(Math.sqrt(m*m + n*n)) == p.thickness) {
+//						if(map[p.x + m][p.y + n] != 0 && map[p.x +m][p.y + n] != p.playernumber) {
+//							//dead;
+//						}
+//						//cannot colide with itself
+//					}
+//				}
+//			}
+//		}
+//	}
 	
 	
 	public class PlayerInfo{
@@ -156,6 +182,8 @@ try {
 		int thickness;
 		int x;
 		int y;
+		int formerx;
+		int formery;
 		
 		PlayerInfo(String name){
 			this.name=name;
@@ -164,6 +192,7 @@ try {
 			this.movement = new SequentialSpace();
 			this.forceX = 1;
 			this.forceY=1;
+			this.thickness=5;
 			this.x=100;
 			this.y=100;
 		}
