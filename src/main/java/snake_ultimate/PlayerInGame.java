@@ -192,15 +192,33 @@ public class PlayerInGame implements Runnable{
 		
 		public void run(){
 			try {
-				while(true){
+				byte playersAlive = (byte) numPlayers;
+				while(playersAlive > 1){
 					
 					repaint();
 					for(int i = 0; i < numPlayers; i++) {
 						Object[] t;
 						t = position.get(new FormalField(Integer.class),new FormalField(Integer.class));
-						x[i] = (int) t[0];
-						y[i] = (int) t[1];
 						
+						if((int) t[0] < 0) {
+							if((int) t[0] == -1) { //player 1 dead
+								System.out.println("Red has been eliminated");
+							}
+							else if((int) t[0] == -2) {//player 2 dead
+								System.out.println("Blue has been eliminated");
+							}
+							else if((int) t[0] == -3) {//player 2 dead
+								System.out.println("Green has been eliminated");
+							}
+							else if((int) t[0] == -4) {//player 2 dead
+								System.out.println("Yellow has been eliminated");
+							}
+							i--; //resync the for loop
+						}
+						else {
+							x[i] = (int) t[0];
+							y[i] = (int) t[1];
+						}
 					}
 				}
 				} catch (InterruptedException e) {

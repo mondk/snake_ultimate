@@ -65,41 +65,55 @@ try {
 
 			//String we ="e";
 			//GameLoop
-			while(true) {
+			
+			byte playersAlive = (byte) players.size();
+			
+			while(playersAlive > 1) {
 				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
 					
 					if(p.isAlive) {
-					String input;
-					Object[] t = p.movement.query(new FormalField(String.class));
-					if(t!=null) {
-						input=(String) t[0];
-						if(input.equals("d")) {
-							p.increaseAngle();
+						String input;
+						Object[] t = p.movement.query(new FormalField(String.class));
+						if(t!=null) {
+							input=(String) t[0];
+							if(input.equals("d")) {
+								p.increaseAngle();
+							}
+							else if(input.equals("a")){
+								p.decreaseAngle();
+							}
 						}
-						else if(input.equals("a")){
-							p.decreaseAngle();
+						
+						p.formerx = p.x;
+						p.formery = p.y;
+						
+						//move player
+						p.move();
+						
+						//check boundary collision
+						if(p.x < 0 + p.thickness || p.x > 999 - p.thickness || p.y < 0 + p.thickness || p.y > 999 - p.thickness) {
+							System.out.println("Boundary Collision :"+p.playernumber);
+							p.force = 0;
+							p.isAlive=false;
+							playersAlive --;
+							p.posistion.put(-p.playernumber,0);
 						}
-					}
-					
-					p.formerx = p.x;
-					p.formery = p.y;
-					
-					//move player
-					p.move();
+						else {
 			//		System.out.println(p.x+" "+p.y);							
 							for(int m = -p.thickness; m <= p.thickness; m++) {//collision check
 								for(int n = -p.thickness; n <= p.thickness; n++) {
 									if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {
 										byte currentTile = map[p.x + m][p.y + n];
 										if(currentTile != 0 && currentTile != p.playernumber) {
-
 											System.out.println("Collision :"+p.playernumber);//possible manually draw the circle instead of this automated shit
 											p.force = 0;
 											p.isAlive=false;
-											
-
+											m = p.thickness + 1;//break loop
+											n = p.thickness + 1;
+											playersAlive --;
+											p.posistion.put(-p.playernumber,0);
 										}
 									}
 								}
@@ -119,6 +133,7 @@ try {
 									}
 								}
 							}
+						}
 
 
 					}
@@ -152,6 +167,17 @@ try {
 					}
 				}
 			}
+			
+			for(PlayerInfo p: players) {
+				if(p.isAlive) {
+					System.out.println("Congratulations to " + p.name + " for being last mans standing!");
+				}
+				else {
+					System.out.println(p.name + " was eliminated!");
+
+				}
+			}
+			
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
