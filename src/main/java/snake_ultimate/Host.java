@@ -56,6 +56,7 @@ try {
 				
 			}
 			queue.put("begin");
+			queue.put(players.size());
 
 			//players.get(0).movement.put("a");
 			String we ="e";
