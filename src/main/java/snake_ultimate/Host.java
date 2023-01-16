@@ -41,6 +41,13 @@ try {
 
 			// queuing players 
 			while (queue.queryp(new ActualField("start"))==null&&players.size()<4) {
+				Object[] beksed = queue.getp(new FormalField(String.class),new FormalField(String.class),new FormalField(Integer.class));
+				
+				if(beksed!=null){
+					for(PlayerInfo p: players) {
+						queue.put(beksed[0],beksed[1],p.name);
+					}
+				}
 
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
@@ -213,6 +220,7 @@ try {
 		String name;
 		SequentialSpace posistion;
 		SequentialSpace movement;
+		SequentialSpace chat;
 		double forceX;
 		double forceY;
 		double force = 5;
@@ -231,6 +239,7 @@ try {
 			this.angle=0;
 			this.posistion = new SequentialSpace();
 			this.movement = new SequentialSpace();
+			this.chat = new SequentialSpace();
 			this.forceX = 1;
 			this.forceY=1;
 			this.thickness=5;

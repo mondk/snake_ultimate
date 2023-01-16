@@ -23,33 +23,21 @@ public class Client {
 			System.out.println();
 			System.out.print("Please enter a name:");
 			String name = input.readLine();
-			System.out.println();
-			boolean isHost = false;
 			
-			System.out.print("Write IP address or enter for default IP: ");
-			String option=input.readLine();
-			if(option.isEmpty()){
-				IP = InetAddress.getLocalHost().getHostAddress();
-			}
-			else if (option.equals("j")){
-				IP="10.209.118.64";	
-			}
-		
-				
-				
+			boolean isHost = false;
+			boolean gameIsRunning = false;
+			String option;
 
-			String uri = "tcp://"+IP+":9002/queue?keep";
+			
 			while(true) {
 				System.out.println("Type \"Host\" if you want to host a game,");
 				System.out.println("type \"Join\" if you want to join a game.");
 				System.out.println("Or type \"Exit\" to close the game");
 				option = input.readLine();
 				if(option.equals("Host")) {
-				
-					new Thread(new Host("tcp://"+IP+":9002/?keep")).start();
 					//isHost = true;
 					isHost=true;
-					Thread.sleep(200);
+					
 					break;
 				}
 				else if(option.equals("Join")) {
@@ -62,6 +50,20 @@ public class Client {
 					System.out.println("Uknown comand!");
 				}
 			}
+			System.out.print("Write IP address or enter for default IP: ");
+			option = input.readLine();
+			if(option.isEmpty()){
+				IP = InetAddress.getLocalHost().getHostAddress();
+			}
+			else if (option.equals("j")){
+				IP="10.209.118.64";	
+			}
+			String uri = "tcp://"+IP+":9002/queue?keep";
+			if(isHost) {
+				new Thread(new Host("tcp://"+IP+":9002/?keep")).start();
+				Thread.sleep(200);
+			}
+			
 			
 			// Set the URI of the chat space
 			// Default value
@@ -72,20 +74,19 @@ public class Client {
 
 			chat.put("join", name,1);
 			// Keep sending whatever the user types
+			new Thread(new ReadChat(chat,name)).start();
+			new Thread(new WriteChat(chat,name,isHost)).start();
 			System.out.println("Start chatting...");
+			
 			while(true) {
-				String message = input.readLine();
-				if(message.equals("start")&&isHost) {
-					chat.put("start");
-				}
-				chat.put(name, message);
+				
+				
 				Object[] b = chat.queryp(new ActualField("begin"));
 				if(b!=null) {
 					System.out.println("Game is starting...");
 					break;
 				}
-				Object[] t = chat.query(new FormalField(String.class),new FormalField(String.class));
-				System.out.println(t[0] + ": " + t[1]);
+				
 				
 			}	
 			
@@ -103,7 +104,8 @@ public class Client {
 			//change to numplayers
 			new Thread(new PlayerInGame((int) chat.query(new FormalField(Integer.class))[0],name,position,movement)).start();
 			
-			
+			new Thread(new ReadChat(chat,name)).start();
+			new Thread(new WriteChat(chat,name,isHost)).start();
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -113,4 +115,6 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	
+
 }
