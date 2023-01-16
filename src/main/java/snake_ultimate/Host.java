@@ -40,7 +40,7 @@ try {
 			repository.addGate(gateUri);
 
 			// queuing players 
-			while (queue.queryp(new ActualField("start"))==null) {
+			while (queue.queryp(new ActualField("start"))==null&&players.size()<4) {
 
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
