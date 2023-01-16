@@ -44,7 +44,7 @@ try {
 
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
-					players.add(new PlayerInfo((String)p[1]));
+					players.add(new PlayerInfo((String)p[1] , (byte) (players.size() + 1)));
 					System.out.println("Joined");
 				}
 			}
