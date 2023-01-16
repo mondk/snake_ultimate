@@ -70,10 +70,10 @@ try {
 					Object[] t = p.movement.query(new FormalField(String.class));
 					if(t!=null) {
 						input=(String) t[0];
-						if(input.equals("a")) {
+						if(input.equals("d")) {
 							p.increaseAngle();
 						}
-						else if(input.equals("d")){
+						else if(input.equals("a")){
 							p.decreaseAngle();
 						}
 					}
@@ -185,7 +185,8 @@ try {
 		int formerx;
 		int formery;
 		
-		PlayerInfo(String name){
+		PlayerInfo(String name, byte playerNumber){
+			this.playernumber = playerNumber;
 			this.name=name;
 			this.angle=0;
 			this.posistion = new SequentialSpace();
@@ -193,8 +194,22 @@ try {
 			this.forceX = 1;
 			this.forceY=1;
 			this.thickness=5;
-			this.x=100;
-			this.y=100;
+			if(playerNumber == 1) {
+				this.x=100;
+				this.y=100;
+			}
+			else if(playerNumber == 2) {
+				this.x=900;
+				this.y=100;
+			}
+			else if(playerNumber == 3) {
+				this.x=100;
+				this.y=900;
+			}
+			else if(playerNumber == 4) {
+				this.x=900;
+				this.y=900;
+			}
 		}
 		public void decreaseAngle() {
 			// TODO Auto-generated method stub

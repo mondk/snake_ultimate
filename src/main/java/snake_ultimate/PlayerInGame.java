@@ -152,8 +152,8 @@ public class PlayerInGame implements Runnable{
 		int formerPosX[];
 		int formerPosY[];
 		int numPlayers = 2;
-		int x [] = {100, 266, 633, 900}; //start positions
-		int y [] = {100, 400, 400, 100};
+		int x [] = {100, 900, 100, 900}; //start positions
+		int y [] = {100, 100, 900, 900};
 		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
 		private RemoteSpace position;
 		private RemoteSpace movement;
