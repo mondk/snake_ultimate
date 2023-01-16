@@ -100,8 +100,8 @@ public class Client {
 			
 			
 			//System.out.println(movement.query(new FormalField(String.class))[0]);
-			
-			new Thread(new PlayerInGame(2,name,position,movement)).start();
+			//change to numplayers
+			new Thread(new PlayerInGame((int) chat.query(new FormalField(Integer.class))[0],name,position,movement)).start();
 			
 			
 

@@ -44,7 +44,9 @@ try {
 
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
+
 					players.add(new PlayerInfo((String)p[1],(byte) (players.size()+1)));
+
 					System.out.println("Joined");
 				}
 			}
@@ -57,6 +59,7 @@ try {
 			}
 			queue.put("begin");
 			queue.put(players.size());
+
 			//players.get(0).movement.put("a");
 			
 
@@ -91,10 +94,12 @@ try {
 									if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {
 										byte currentTile = map[p.x + m][p.y + n];
 										if(currentTile != 0 && currentTile != p.playernumber) {
+
 											System.out.println("Collision :"+p.playernumber);//possible manually draw the circle instead of this automated shit
 											p.force = 0;
 											p.isAlive=false;
 											
+
 										}
 									}
 								}
@@ -114,7 +119,7 @@ try {
 									}
 								}
 							}
-						
+
 
 					}
 				//collision is checked for all players
@@ -194,6 +199,7 @@ try {
 		PlayerInfo(String name, byte playerNumber){
 			this.playernumber = playerNumber;
 			this.isAlive = true;
+
 			this.name=name;
 			this.angle=0;
 			this.posistion = new SequentialSpace();
