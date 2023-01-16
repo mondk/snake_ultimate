@@ -68,7 +68,7 @@ try {
 			
 			byte playersAlive = (byte) players.size();
 			
-			while(playersAlive > 1) {
+			while(playersAlive > 0) {
 				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
@@ -169,6 +169,7 @@ try {
 			}
 			
 			for(PlayerInfo p: players) {
+				p.posistion.put(-5,0);
 				if(p.isAlive) {
 					System.out.println("Congratulations to " + p.name + " for being last mans standing!");
 				}

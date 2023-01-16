@@ -192,8 +192,8 @@ public class PlayerInGame implements Runnable{
 		
 		public void run(){
 			try {
-				byte playersAlive = (byte) numPlayers;
-				while(playersAlive > 1){
+				boolean gameInProgress = true;
+				while(gameInProgress){
 					
 					repaint();
 					for(int i = 0; i < numPlayers; i++) {
@@ -212,6 +212,10 @@ public class PlayerInGame implements Runnable{
 							}
 							else if((int) t[0] == -4) {//player 2 dead
 								System.out.println("Yellow has been eliminated");
+							}
+							else if((int) t[0] == -5) {
+								gameInProgress = false;
+								i = 10; // end loop
 							}
 							i--; //resync the for loop
 						}
