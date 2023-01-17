@@ -41,7 +41,7 @@ try {
 
 			// queuing players 
 			while (queue.queryp(new ActualField("start"))==null&&players.size()<4) {
-				Object[] beksed = queue.getp(new FormalField(String.class),new FormalField(String.class),new FormalField(Integer.class));
+				Object[] beksed = queue.getp(new FormalField(String.class),new FormalField(String.class),new ActualField("lol"));
 				
 				if(beksed!=null){
 					for(PlayerInfo p: players) {

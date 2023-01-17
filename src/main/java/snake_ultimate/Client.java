@@ -74,8 +74,11 @@ public class Client {
 
 			chat.put("join", name,1);
 			// Keep sending whatever the user types
-			new Thread(new ReadChat(chat,name)).start();
+			Thread.sleep(50);
 			new Thread(new WriteChat(chat,name,isHost)).start();
+			Thread.sleep(50);
+			new Thread(new ReadChat(chat,name)).start();
+			
 			System.out.println("Start chatting...");
 			
 			while(true) {
@@ -104,8 +107,7 @@ public class Client {
 			//change to numplayers
 			new Thread(new PlayerInGame((int) chat.query(new FormalField(Integer.class))[0],name,position,movement)).start();
 			
-			new Thread(new ReadChat(chat,name)).start();
-			new Thread(new WriteChat(chat,name,isHost)).start();
+			
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

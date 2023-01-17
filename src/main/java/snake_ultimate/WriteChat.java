@@ -30,7 +30,7 @@ public class WriteChat implements Runnable{
 				if(message.equals("start")&&isHost) {
 					chat.put("start");
 				}
-				chat.put(name, message,0);
+				chat.put(name, message,"lol");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
