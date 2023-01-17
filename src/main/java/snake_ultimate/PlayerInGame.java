@@ -206,23 +206,8 @@ public class PlayerInGame implements Runnable{
 						t = position.get(new FormalField(Integer.class),new FormalField(Integer.class));
 						
 						if((int) t[0] < 0) {
-							if((int) t[0] == -1) { //player 1 dead
-								System.out.println("Red has been eliminated");
-							}
-							else if((int) t[0] == -2) {//player 2 dead
-								System.out.println("Blue has been eliminated");
-							}
-							else if((int) t[0] == -3) {//player 2 dead
-								System.out.println("Green has been eliminated");
-							}
-							else if((int) t[0] == -4) {//player 2 dead
-								System.out.println("Yellow has been eliminated");
-							}
-							else if((int) t[0] == -5) {
-								gameInProgress = false;
-								i = 10; // end loop
-							}
-							i--; //resync the for loop
+							gameInProgress = false;
+							break;
 						}
 						else {
 							x[i] = (int) t[0];

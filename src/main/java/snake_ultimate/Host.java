@@ -74,6 +74,7 @@ try {
 			
 			byte playersAlive = (byte) players.size();
 			
+			Thread.sleep(3000);
 			for(PlayerInfo p: players) {
 				queue.put("Server","Game starting in 3",p.name);
 			}
@@ -90,7 +91,7 @@ try {
 				queue.put("Server","GO!!!",p.name);
 			}
 			
-			while(playersAlive > 0) {
+			while(playersAlive > 1) {
 				//System.out.println("start?");
 				Thread.sleep(30); //slow down game
 				//update player position
@@ -117,11 +118,12 @@ try {
 						
 						//check boundary collision
 						if(p.x < 0 + p.thickness || p.x > 999 - p.thickness || p.y < 0 + p.thickness || p.y > 999 - p.thickness) {
-							System.out.println("Boundary Collision :"+p.playernumber);
+							for(PlayerInfo q: players) {
+								queue.put("Server", p.name + " has been elimanted by going out of bounds!",q.name);
+							}
 							p.force = 0;
 							p.isAlive=false;
 							playersAlive --;
-							p.posistion.put(-p.playernumber,0);
 						}
 						else {
 			//		System.out.println(p.x+" "+p.y);							
@@ -130,13 +132,14 @@ try {
 									if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {
 										byte currentTile = map[p.x + m][p.y + n];
 										if(currentTile != 0 && currentTile != p.playernumber) {
-											System.out.println("Collision :"+p.playernumber);//possible manually draw the circle instead of this automated shit
+											for(PlayerInfo q: players) {
+												queue.put("Server", p.name + " has been elimanted by touching another tail!",q.name);
+											}
 											p.force = 0;
 											p.isAlive=false;
 											m = p.thickness + 1;//break loop
 											n = p.thickness + 1;
 											playersAlive --;
-											p.posistion.put(-p.playernumber,0);
 										}
 									}
 								}
@@ -192,13 +195,11 @@ try {
 			}
 			
 			for(PlayerInfo p: players) {
-				p.posistion.put(-5,0);
+				p.posistion.put(-1,0); //ends draw thread
 				if(p.isAlive) {
-					System.out.println("Congratulations to " + p.name + " for being last mans standing!");
-				}
-				else {
-					System.out.println(p.name + " was eliminated!");
-
+					for(PlayerInfo q: players) {
+						queue.put("Server", "Congratulations to " + p.name + " for being the last man standing!",q.name);
+					}
 				}
 			}
 			
