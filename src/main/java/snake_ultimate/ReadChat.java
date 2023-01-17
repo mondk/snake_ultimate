@@ -19,12 +19,12 @@ public class ReadChat implements Runnable{
 		while(true) {
 			Object[] t = null;
 			try {
-				t = chat.get(new FormalField(String.class),new FormalField(String.class),new ActualField(name));
+				t = chat.get(new FormalField(String.class),new FormalField(String.class),new ActualField(name)); //gets from server
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(t[0] + ": " + t[1]);
+			System.out.println(t[0] + ": " + t[1]); and print message
 		}
 	}
 	

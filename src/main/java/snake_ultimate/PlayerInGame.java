@@ -32,19 +32,15 @@ public class PlayerInGame implements Runnable{
 		new Thread(new DrawThread(numOfPlayers, position,movement)).start();
 		
 	}
-
-
-	
-
 	
 	public class Control implements KeyListener{
 
-		RemoteSpace movement;
+		RemoteSpace movement; 
 		
 		Control(RemoteSpace movement){
-			this.movement=movement;
+			this.movement=movement; //init remotespace for input from player to server
 			try {
-				this.movement.put(" ");
+				this.movement.put(" "); //put an initial value (straight ahead) or game will freeze until all have pressed one
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -59,7 +55,7 @@ public class PlayerInGame implements Runnable{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
-			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			if(e.getKeyCode()==KeyEvent.VK_LEFT) {//read from keyboard
 				input("a");
 			}
 			else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
@@ -71,7 +67,7 @@ public class PlayerInGame implements Runnable{
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			if(e.getKeyCode()==KeyEvent.VK_LEFT) {//read from keyboard
 				input(" ");
 			}
 			
@@ -85,88 +81,29 @@ public class PlayerInGame implements Runnable{
 	}
 		public void input(String i) {
 			try {
-				this.movement.getp(new FormalField(String.class));
+				this.movement.getp(new FormalField(String.class)); //updates channel based on keyevents
 				this.movement.put(i);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
+		}
 	}
-	}
 
-	/*class DrawThread implements Runnable {
-		int formerPosX[];
-		int formerPosY[];
-		int numPlayers = 2;
-
-		private RemoteSpace position;
-
-		
-	    public DrawThread(int numPlayers,RemoteSpace position) {
-	    	this.numPlayers = numPlayers;
-	    	this.position=position;
-	    	
-	    	this.formerPosX = new int[numPlayers];
-	    	this.formerPosY = new int[numPlayers];
-	    	for(int i = 0; i < numPlayers; i++) {
-	  //  		formerPosX[i] = startPosX[i];
-	  //   		formerPosY[i] = startPosY[i];
-	    	}
-	    	
-	  //draw Start Pos
-	    	
-	    }
-
-	    public void run() {
-	    	int playerPosx[] = new int[numPlayers];
-	    	int playerPosy[] = new int[numPlayers];
-			
-	    	while(true) {
-
-	    		try {
-					for(int i = 0; i < numPlayers; i++){
-						
-						Object[] t = position.get(new FormalField(Integer.class),new FormalField(Integer.class));
-						
-						playerPosx[i]=(int) t[0];
-						playerPosy[i]=(int) t[1];
-							
-					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-	    		for(int i = 0; i < numPlayers; i++){
-
-	    		}
-	    		
-	    		
-	    	}
-
-	    		//draw lines from formerPos to newPos for all players
-	    		//delete and update circles to newPos
-	    		//formerPos = newPos
-	    }
-
-	}
-	*/
 	class DrawThread extends JPanel implements Runnable{
-
-		int formerPosX[];
-		int formerPosY[];
-		int numPlayers;
-		int x [] = {100, 900, 100, 900}; //start positions
+		
+		int numPlayers; //used to draw each player in game
+		int x [] = {100, 900, 100, 900}; //start positions for all 4 wether they join or not
 		int y [] = {100, 100, 900, 900};
-		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
+		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}; //colour for each player
 		private RemoteSpace position;
-		private RemoteSpace movement;
+	//	private RemoteSpace movement;
 		
 	    public DrawThread(int numPlayers,RemoteSpace position,RemoteSpace movement) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
-	    	this.movement=movement;
+	  //  	this.movement=movement;
 	    	
 	    	
 			JFrame j = new JFrame();
@@ -176,36 +113,36 @@ public class PlayerInGame implements Runnable{
 			j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			j.setResizable(false);
 			j.setVisible(true);
-			j.addKeyListener(new Control(movement));
+			j.addKeyListener(new Control(movement)); //Remote space for keylistener
 		}
 		
 
 				
 		protected void paintComponent(Graphics g){
-			for(int i = 0; i < numPlayers; i++) {
-				g.setColor(color[i]);
-				drawCircle(g,x[i],y[i],5);
+			for(int i = 0; i < numPlayers; i++) {//for all players in Game
+				g.setColor(color[i]);//set their colour
+				drawCircle(g,x[i],y[i],5); //draw their current position
 			}
 			
 		}
 		
 		 public void drawCircle(Graphics cg, int xCenter, int yCenter, int r) {
-		     cg.drawOval(xCenter-r, yCenter-r, 2*r, 2*r);
+		     cg.drawOval(xCenter-r, yCenter-r, 2*r, 2*r); //draw and fill a circle
 		     cg.fillOval(xCenter-r, yCenter-r, 2*r, 2*r);
 		     Toolkit.getDefaultToolkit().sync();
 		 }//end drawCircle
 		
-		public void run(){
+		public void run(){ //drawThread thread
 			try {
 				boolean gameInProgress = true;
 				while(gameInProgress){
 					
-					repaint();
+					repaint(); //paints everything
 					for(int i = 0; i < numPlayers; i++) {
 						Object[] t;
-						t = position.get(new FormalField(Integer.class),new FormalField(Integer.class));
+						t = position.get(new FormalField(Integer.class),new FormalField(Integer.class)); //fetches all player positions
 						
-						if((int) t[0] < 0) {
+						if((int) t[0] < 0) { //if fetched a neg number, then game has concluded
 							gameInProgress = false;
 							break;
 						}

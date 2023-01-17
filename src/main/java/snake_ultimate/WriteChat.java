@@ -27,10 +27,10 @@ public class WriteChat implements Runnable{
 			
 			try {
 				String message = input.readLine();
-				if(message.equals("start")&&isHost) {
+				if(message.equals("start")&&isHost) {//only host can start game
 					chat.put("start");
 				}
-				chat.put(name, message,"lol");
+				chat.put(name, message,"lol"); //writes to server
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
