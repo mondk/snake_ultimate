@@ -29,7 +29,6 @@ public class PlayerInGame implements Runnable{
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
 		new Thread(new DrawThread(numOfPlayers, position,movement)).start();
 		
 	}
@@ -44,6 +43,12 @@ public class PlayerInGame implements Runnable{
 		
 		Control(RemoteSpace movement){
 			this.movement=movement;
+			try {
+				this.movement.put(" ");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		@Override
 		public void keyTyped(KeyEvent e) {

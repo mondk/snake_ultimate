@@ -66,7 +66,6 @@ try {
 			}
 			queue.put("begin");
 			queue.put(players.size());
-
 			//players.get(0).movement.put("a");
 			
 
@@ -75,7 +74,24 @@ try {
 			
 			byte playersAlive = (byte) players.size();
 			
+			for(PlayerInfo p: players) {
+				queue.put("Server","Game starting in 3",p.name);
+			}
+			Thread.sleep(1000);
+			for(PlayerInfo p: players) {
+				queue.put("Server","Game starting in 2",p.name);
+			}
+			Thread.sleep(1000);
+			for(PlayerInfo p: players) {
+				queue.put("Server","Game starting in 1",p.name);
+			}
+			Thread.sleep(1000);
+			for(PlayerInfo p: players) {
+				queue.put("Server","GO!!!",p.name);
+			}
+			
 			while(playersAlive > 0) {
+				//System.out.println("start?");
 				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
@@ -236,7 +252,18 @@ try {
 			this.isAlive = true;
 
 			this.name=name;
-			this.angle=0;
+			if(playerNumber == 1) {
+				this.angle= 45;
+			}
+			else if(playerNumber == 2) {
+				this.angle = 135;
+			}
+			else if(playerNumber == 3) {
+				this.angle = -45;
+			}
+			else if(playerNumber == 4){
+				this.angle = -135;
+			}
 			this.posistion = new SequentialSpace();
 			this.movement = new SequentialSpace();
 			this.chat = new SequentialSpace();
