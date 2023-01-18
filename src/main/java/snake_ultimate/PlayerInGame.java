@@ -28,8 +28,11 @@ public class PlayerInGame implements Runnable{
 	}
 	@Override
 	public void run() {
+<<<<<<< Updated upstream
 		// TODO Auto-generated method stub
 		
+=======
+>>>>>>> Stashed changes
 		new Thread(new DrawThread(numOfPlayers, position,movement)).start();
 		
 	}
@@ -43,18 +46,30 @@ public class PlayerInGame implements Runnable{
 		RemoteSpace movement;
 		
 		Control(RemoteSpace movement){
+<<<<<<< Updated upstream
 			this.movement=movement;
+=======
+			this.movement=movement; //init remotespace for input from player to server
+			try {
+				this.movement.put(" "); //put an initial value (straight ahead) or game will freeze until all have pressed one
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+>>>>>>> Stashed changes
 		}
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+<<<<<<< Updated upstream
 			// TODO Auto-generated method stub
 			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+=======
+			if(e.getKeyCode()==KeyEvent.VK_LEFT) {//read from keyboard
+>>>>>>> Stashed changes
 				input("a");
 			}
 			else if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
@@ -65,8 +80,12 @@ public class PlayerInGame implements Runnable{
 
 		@Override
 		public void keyReleased(KeyEvent e) {
+<<<<<<< Updated upstream
 			// TODO Auto-generated method stub
 			if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+=======
+			if(e.getKeyCode()==KeyEvent.VK_LEFT) {//read from keyboard
+>>>>>>> Stashed changes
 				input(" ");
 			}
 			
@@ -80,10 +99,20 @@ public class PlayerInGame implements Runnable{
 	}
 		public void input(String i) {
 			try {
+<<<<<<< Updated upstream
 				this.movement.getp(new FormalField(String.class));
+=======
+				while(true) {//mutual exclusion on p.movement from host thread by setting lock2
+					this.movement.put("Lock2");
+					if(this.movement.queryp(new ActualField("Lock1")) == null) {
+						break;
+					}
+					this.movement.get(new ActualField("Lock2"));
+				}
+				this.movement.getp(new FormalField(String.class)); //updates channel based on keyevents
+>>>>>>> Stashed changes
 				this.movement.put(i);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -98,6 +127,7 @@ public class PlayerInGame implements Runnable{
 		private RemoteSpace position;
 
 		
+<<<<<<< Updated upstream
 	    public DrawThread(int numPlayers,RemoteSpace position) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
@@ -157,13 +187,24 @@ public class PlayerInGame implements Runnable{
 		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
 		private RemoteSpace position;
 		private RemoteSpace movement;
+=======
+		int numPlayers; //used to draw each player in game
+		int x [] = {100, 900, 100, 900}; //start positions for all 4 whether they join or not
+		int y [] = {100, 100, 700, 700};
+		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}; //color for each player
+		private RemoteSpace position;
+>>>>>>> Stashed changes
 		
 	    public DrawThread(int numPlayers,RemoteSpace position,RemoteSpace movement) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
+<<<<<<< Updated upstream
 	    	this.movement=movement;
 	    	
+=======
+>>>>>>> Stashed changes
 	    	
+	    	//Defining the parameters of the gameboard 
 			JFrame j = new JFrame();
 			j.setBackground(Color.WHITE);
 			j.setSize(1000,1000);
@@ -177,9 +218,15 @@ public class PlayerInGame implements Runnable{
 
 				
 		protected void paintComponent(Graphics g){
+<<<<<<< Updated upstream
 			for(int i = 0; i < 4; i++) {
 				g.setColor(color[i]);
 				drawCircle(g,x[i],y[i],5);
+=======
+			for(int i = 0; i < numPlayers; i++) {//for all players in Game
+				g.setColor(color[i]);//set their color
+				drawCircle(g,x[i],y[i],5); //draw their current position
+>>>>>>> Stashed changes
 			}
 			
 		}
@@ -201,10 +248,20 @@ public class PlayerInGame implements Runnable{
 						x[i] = (int) t[0];
 						y[i] = (int) t[1];
 						
+<<<<<<< Updated upstream
+=======
+						if((int) t[0] < 0) { //if fetched a negative number, then game has concluded
+							gameInProgress = false;
+							break;
+						}
+						else {
+							x[i] = (int) t[0];
+							y[i] = (int) t[1];
+						}
+>>>>>>> Stashed changes
 					}
 				}
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}
@@ -213,7 +270,6 @@ public class PlayerInGame implements Runnable{
 	}
 }
 	
-
 
 
 

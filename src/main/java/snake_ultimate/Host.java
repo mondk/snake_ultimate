@@ -40,17 +40,51 @@ try {
 			repository.addGate(gateUri);
 
 			// queuing players 
+<<<<<<< Updated upstream
 			while (queue.queryp(new ActualField("start"))==null) {
 			
 				
 				Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 				if(p!=null) {
 					players.add(new PlayerInfo((String)p[1]));
+=======
+			while(true) {
+			while (queue.queryp(new ActualField("start"))==null&&players.size()<4) { //cannot start with more than 4 players, get start from host to start
+				Object[] p = queue.get(new FormalField(String.class),new FormalField(String.class));
+				
+				if("join".equals(p[1])) {
+					boolean newPlayer = true;
+					for(PlayerInfo player: players) {
+						if(player.name.equals(p[0])) {
+							printMessage((String)p[0],(String)p[1],queue);
+							newPlayer=false;
+						}
+					}
+					if(newPlayer) {
+					players.add(new PlayerInfo((String)p[1],(byte) (players.size()+1)));//adds a playerInfo for that new player
+
+>>>>>>> Stashed changes
 					System.out.println("Joined");
+					}
 				}
+<<<<<<< Updated upstream
 			}
 			
 			//creating tupleSpaces
+=======
+				else if("ishost".equals(p[0])&&"start".equals(p[1])) {
+					System.out.println("startsedf");
+					break;
+					
+				}
+				else
+					printMessage((String)p[0],(String)p[1],queue);
+			
+			}
+			queue.getp(new ActualField("start"));
+
+			//creating tupleSpaces for all players
+>>>>>>> Stashed changes
 			for(PlayerInfo p:players) {
 				
 				repository.add(p.name+"_positions", p.posistion);
@@ -116,9 +150,12 @@ try {
 			e.printStackTrace();
 		}
 
+
 		
 	}
+	public void printMessage(String name,String message,SequentialSpace chat) {
 	
+<<<<<<< Updated upstream
 	//check player collision
 	public void checkCollision(ArrayList<PlayerInfo> players) {
 		for(PlayerInfo p: players) {
@@ -136,6 +173,17 @@ try {
 	}
 	
 	
+=======
+		for(PlayerInfo p: players) {
+			try {
+				chat.put(name,message,p.name);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+>>>>>>> Stashed changes
 	public class PlayerInfo{
 		double angle;
 		byte playernumber;

@@ -69,7 +69,11 @@ public class Client {
 			System.out.println("Connecting to chat space " + uri + "...");
 			RemoteSpace chat = new RemoteSpace(uri);
 
+<<<<<<< Updated upstream
 			chat.put("join", name,1);
+=======
+			chat.put(name,"join"); //types to server join to create a playerInfo object.
+>>>>>>> Stashed changes
 			// Keep sending whatever the user types
 			System.out.println("Start chatting...");
 			while(true) {
