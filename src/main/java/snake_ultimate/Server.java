@@ -11,6 +11,9 @@ import org.jspace.SpaceRepository;
 
 
 public class Server {
+	
+	//Testing of chat space and to try connecting multiple computers in a chat room
+	//This class is not used in the final game
 
 	public static void main(String[] args) {
 		try {
@@ -31,7 +34,6 @@ public class Server {
 			String uri = input.readLine();
 			// Default value
 			if (uri.isEmpty()) { 
-				//uri = "tcp://127.0.0.1:9001/?keep";
 				uri = "tcp://10.209.118.64:9001/?keep";
 			}
 
@@ -50,10 +52,8 @@ public class Server {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

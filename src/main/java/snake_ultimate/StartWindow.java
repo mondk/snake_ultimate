@@ -13,9 +13,11 @@ import javax.swing.JTextField;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class StartWindow {
+	
+	//Testing of the starting screen that appears when a user starts the game
+	//This class is not used in the final game
 
 	public static void main(String[] args) throws UnknownHostException {
-		// TODO Auto-generated method stub
 		 JFrame f = new JFrame("Snake Ulitimate");
 		   //set size and location of frame
 		   f.setSize(390, 300);
@@ -27,7 +29,7 @@ public class StartWindow {
 		   JLabel labelM = new JLabel("Please wirte your name ");
 		   labelM.setBounds(50, 70, 200, 30);
 		   
-		   JLabel labelJ = new JLabel("Write predered IP or use default");
+		   JLabel labelJ = new JLabel("Write preferred IP or use default");
 		   labelJ.setBounds(50, 150, 200, 30);
 		   
 		   JTextField motto1 = new JTextField();

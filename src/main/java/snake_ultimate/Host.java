@@ -23,11 +23,10 @@ public class Host implements Runnable{
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-try {
-			
 		
-			// Create a repository 
+		try {
+		
+			// Create a repository based on the host information
 			SpaceRepository repository = new SpaceRepository();
 			SequentialSpace queue = new SequentialSpace();
 
@@ -41,18 +40,18 @@ try {
 			// queuing players 
 			while(true) {
 				while (queue.queryp(new ActualField("start"))==null&&players.size()<4) { //cannot start with more than 4 players, get start from host to start
-					Object[] beksed = queue.getp(new FormalField(String.class),new FormalField(String.class),new ActualField("lol"));
+					Object[] message = queue.getp(new FormalField(String.class),new FormalField(String.class),new ActualField("lol"));
 					
-					if(beksed!=null){
-						for(PlayerInfo p: players) {//repeat message received to all other players so they cant print
-							queue.put(beksed[0],beksed[1],p.name);
+					if(message!=null){
+						for(PlayerInfo p: players) {//repeat message received to all other players so they can't print
+							queue.put(message[0],message[1],p.name);
 						}
 					}
 	
 					Object[] p = queue.getp(new ActualField("join"),new FormalField(String.class),new FormalField(Integer.class));
 					if(p!=null) {//a new player connecting automatically writes join in chat
 	
-						players.add(new PlayerInfo((String)p[1],(byte) (players.size()+1)));//adds a playerInfo for that new player
+						players.add(new PlayerInfo((String)p[1],(byte) (players.size()+1)));//adds a playerInfo for the new player
 	
 						System.out.println("Joined");
 					}
@@ -63,14 +62,12 @@ try {
 				for(PlayerInfo p:players) {
 					repository.add(p.name+"_positions", p.posistion);
 					repository.add(p.name+"_movement", p.movement);
-					queue.put("begin"); //send a message with triggers all joined players to begin their ingame threads
+					queue.put("begin"); //send a message which triggers all joined players to begin their ingame threads
 					queue.put(players.size());
 					
 				}
-				//players.get(0).movement.put("a");
 				
-	
-				//String we ="e";
+				
 				//GameLoop
 				
 				byte playersAlive = (byte) players.size();
@@ -78,7 +75,7 @@ try {
 				for(PlayerInfo p: players) {
 					p.posistion.get(new ActualField("Ready"));
 				}
-				for(PlayerInfo p: players) {
+				for(PlayerInfo p: players) {//countdown for starting the game 
 					queue.put("Server", "All players have connected", p.name);
 					queue.put("Server","Game starting in 3",p.name);
 				}
@@ -120,7 +117,7 @@ try {
 								}
 							}
 							
-							p.formerx = p.x;//save currentpos before update
+							p.formerx = p.x;//save current position before update
 							p.formery = p.y;
 							
 							//move player
@@ -140,7 +137,7 @@ try {
 									for(int n = -p.thickness; n <= p.thickness; n++) {
 										if(Math.ceil(Math.sqrt(m*m + n*n)) <= p.thickness) {//a circle
 											byte currentTile = map[p.x + m][p.y + n];
-											if(currentTile != 0 && currentTile != p.playernumber) {//if 0 nothing was here, if playerNumber, own head was here
+											if(currentTile != 0 && currentTile != p.playernumber) {//if "0" nothing was here, if "playerNumber", own head was here
 												for(PlayerInfo q: players) {
 													queue.put("Server", p.name + " has been elimanted by touching another tail!",q.name);
 												}
@@ -214,7 +211,7 @@ try {
 					}
 					
 					p.movement.getp(new FormalField(String.class)); //empty movement
-					p.posistion.get(new ActualField("Close"));//wait for threat to close before removing repos
+					p.posistion.get(new ActualField("Close"));//wait for threat to close before removing repositories 
 					repository.remove(p.name+"_positions");
 					repository.remove(p.name+"_movement");
 					queue.put("GameEnd");
@@ -231,6 +228,7 @@ try {
 		
 	}
 	
+	//defining PlayerInfo
 	public class PlayerInfo{
 		double angle;
 		byte playernumber;
@@ -286,12 +284,11 @@ try {
 				this.y=700;
 			}
 		}
+		//defining the how much the angle decrease/increase 
 		public void decreaseAngle() {
-			// TODO Auto-generated method stub
 			angle-=12;
 		}
 		public void increaseAngle() {
-			// TODO Auto-generated method stub
 			angle+=12;
 		}
 		public void move() { //calculates movement based on angle

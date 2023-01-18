@@ -22,7 +22,6 @@ public class WriteChat implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		while(true) {
 			
 			try {
@@ -32,11 +31,11 @@ public class WriteChat implements Runnable{
 					continue;
 				}
 				chat.put(name, message,"lol"); //writes to server
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (InterruptedException e) {
 				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

@@ -8,19 +8,19 @@ public class KeyListenerTest {
 	static char lastInput =' ';
 	static char newInput = ' ';
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		//Test to check if the keys pressed gets registered correctly 
+		//This class is not used in the final game
 		
 		KeyListener listener = new KeyListener() {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if(e.getKeyCode()==KeyEvent.VK_LEFT) {
 					newInput='a';
 				}
@@ -31,7 +31,6 @@ public class KeyListenerTest {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 				if(e.getKeyCode()==KeyEvent.VK_LEFT) {
 					lastInput =newInput;
 					newInput=' ';

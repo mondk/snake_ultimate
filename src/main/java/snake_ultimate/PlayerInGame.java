@@ -28,7 +28,6 @@ public class PlayerInGame implements Runnable{
 	}
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		new Thread(new DrawThread(numOfPlayers, position,movement)).start();
 		
 	}
@@ -42,19 +41,16 @@ public class PlayerInGame implements Runnable{
 			try {
 				this.movement.put(" "); //put an initial value (straight ahead) or game will freeze until all have pressed one
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if(e.getKeyCode()==KeyEvent.VK_LEFT) {//read from keyboard
 				input("a");
 			}
@@ -66,7 +62,6 @@ public class PlayerInGame implements Runnable{
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
 			if(e.getKeyCode()==KeyEvent.VK_LEFT) {//read from keyboard
 				input(" ");
 			}
@@ -92,7 +87,6 @@ public class PlayerInGame implements Runnable{
 				this.movement.put(i);
 				this.movement.get(new ActualField("Lock2"));
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -102,18 +96,16 @@ public class PlayerInGame implements Runnable{
 	class DrawThread extends JPanel implements Runnable{
 		
 		int numPlayers; //used to draw each player in game
-		int x [] = {100, 900, 100, 900}; //start positions for all 4 wether they join or not
+		int x [] = {100, 900, 100, 900}; //start positions for all 4 whether they join or not
 		int y [] = {100, 100, 700, 700};
-		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}; //colour for each player
+		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}; //color for each player
 		private RemoteSpace position;
-	//	private RemoteSpace movement;
 		
 	    public DrawThread(int numPlayers,RemoteSpace position,RemoteSpace movement) {
 	    	this.numPlayers = numPlayers;
 	    	this.position=position;
-	  //  	this.movement=movement;
 	    	
-	    	
+	    	//Defining the parameters of the gameboard 
 			JFrame j = new JFrame();
 			j.setBackground(Color.WHITE);
 			j.setSize(1000,1000);
@@ -128,7 +120,7 @@ public class PlayerInGame implements Runnable{
 				
 		protected void paintComponent(Graphics g){
 			for(int i = 0; i < numPlayers; i++) {//for all players in Game
-				g.setColor(color[i]);//set their colour
+				g.setColor(color[i]);//set their color
 				drawCircle(g,x[i],y[i],5); //draw their current position
 			}
 			
@@ -151,7 +143,7 @@ public class PlayerInGame implements Runnable{
 						Object[] t;
 						t = position.get(new FormalField(Integer.class),new FormalField(Integer.class)); //fetches all player positions
 						
-						if((int) t[0] < 0) { //if fetched a neg number, then game has concluded
+						if((int) t[0] < 0) { //if fetched a negative number, then game has concluded
 							gameInProgress = false;
 							break;
 						}
@@ -163,7 +155,6 @@ public class PlayerInGame implements Runnable{
 				}
 				position.put("Close");
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}
