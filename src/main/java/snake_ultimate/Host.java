@@ -131,7 +131,6 @@ try {
 							for(PlayerInfo q: players) {//if dead, announce to all
 								queue.put("Server", p.name + " has been elimanted by going out of bounds!",q.name);
 							}
-							p.force = 0;
 							p.isAlive=false;
 							playersAlive --;
 						}
@@ -145,7 +144,6 @@ try {
 											for(PlayerInfo q: players) {
 												queue.put("Server", p.name + " has been elimanted by touching another tail!",q.name);
 											}
-											//p.force = 0;
 											p.isAlive=false;
 											m = p.thickness + 1;//break loop
 											n = p.thickness + 1;
