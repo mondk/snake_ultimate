@@ -95,9 +95,17 @@ try {
 				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
-					if(p.isAlive) { //if this player is stil alive
+					if(p.isAlive) { //if this player is still alive
 						String input;
+						while(true) { //mutual exclusion on p.movement from input thread by setting lock1
+							p.movement.put("Lock1");
+							if(p.movement.queryp(new ActualField("Lock2")) == null) {
+								break;
+							}
+							p.movement.get(new ActualField("Lock1"));
+						}
 						Object[] t = p.movement.query(new FormalField(String.class)); //fetch input from player input thread
+						p.movement.get(new ActualField("Lock1"));
 						if(t!=null) {
 							input=(String) t[0]; //move according to input
 							if(input.equals("d")) {

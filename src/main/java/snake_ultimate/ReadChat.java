@@ -24,7 +24,7 @@ public class ReadChat implements Runnable{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(t[0] + ": " + t[1]); and print message
+			System.out.println(t[0] + ": " + t[1]); //and print message
 		}
 	}
 	

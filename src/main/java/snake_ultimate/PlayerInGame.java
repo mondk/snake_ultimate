@@ -81,8 +81,16 @@ public class PlayerInGame implements Runnable{
 	}
 		public void input(String i) {
 			try {
+				while(true) {//mutual exclusion on p.movement from host thread by setting lock2
+					this.movement.put("Lock2");
+					if(this.movement.queryp(new ActualField("Lock1")) == null) {
+						break;
+					}
+					this.movement.get(new ActualField("Lock2"));
+				}
 				this.movement.getp(new FormalField(String.class)); //updates channel based on keyevents
 				this.movement.put(i);
+				this.movement.get(new ActualField("Lock2"));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
