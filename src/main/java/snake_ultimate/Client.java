@@ -43,9 +43,6 @@ public class Client {
 				else if(option.equals("Join")) {
 					break;
 				}
-				else if(option.equals("Exit")) { //does not exit yet (might remove)
-					break;
-				}
 				else {
 					System.out.println("Uknown comand!");
 				}

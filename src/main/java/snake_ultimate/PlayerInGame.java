@@ -81,7 +81,6 @@ public class PlayerInGame implements Runnable{
 	}
 		public void input(String i) {
 			try {
-				System.out.println("Locking");
 				while(true) {//mutual exclusion on p.movement from host thread by setting lock2
 					this.movement.put("Lock2");
 					if(this.movement.queryp(new ActualField("Lock1")) == null) {
