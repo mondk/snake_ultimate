@@ -20,7 +20,6 @@ public class Host implements Runnable{
 	Host(String uri){
 		this.uri=uri;
 		this.players=new ArrayList<>();
-		map = new byte[1000][1000];
 	}
 	@Override
 	public void run() {
@@ -40,6 +39,7 @@ try {
 			repository.addGate(gateUri);
 
 			// queuing players 
+			while(true) {
 			while (queue.queryp(new ActualField("start"))==null&&players.size()<4) { //cannot start with more than 4 players, get start from host to start
 				Object[] beksed = queue.getp(new FormalField(String.class),new FormalField(String.class),new ActualField("lol"));
 				
@@ -57,6 +57,7 @@ try {
 					System.out.println("Joined");
 				}
 			}
+			queue.get(new ActualField("start"));
 			
 			//creating tupleSpaces for all players
 			for(PlayerInfo p:players) {
@@ -73,7 +74,7 @@ try {
 			//GameLoop
 			
 			byte playersAlive = (byte) players.size();
-			
+			map = new byte[1000][1000];
 			for(PlayerInfo p: players) {
 				p.posistion.get(new ActualField("Ready"));
 			}
@@ -144,7 +145,7 @@ try {
 											for(PlayerInfo q: players) {
 												queue.put("Server", p.name + " has been elimanted by touching another tail!",q.name);
 											}
-											p.force = 0;
+											//p.force = 0;
 											p.isAlive=false;
 											m = p.thickness + 1;//break loop
 											n = p.thickness + 1;
@@ -183,13 +184,44 @@ try {
 			
 			for(PlayerInfo p: players) {//if in game loop ends (too few players alive)
 				p.posistion.put(-1,0); //ends draw thread
+				Thread.sleep(50);
 				if(p.isAlive) {
 					for(PlayerInfo q: players) {
 						queue.put("Server", "Congratulations to " + p.name + " for being the last man standing!",q.name);
 					}
 				}
+				else {
+					p.isAlive = true;
+				}
+				
+				if(p.playernumber == 1) { //start angle depending on player and spawn location
+					p.angle= 45;
+					p.x = 100;
+					p.y = 100;
+				}
+				else if(p.playernumber == 2) {
+					p.angle = 135;
+					p.x = 900;
+					p.y = 100;
+				}
+				else if(p.playernumber == 3) {
+					p.angle = -45;
+					p.x = 100;
+					p.y = 700;
+				}
+				else if(p.playernumber == 4){
+					p.angle = -135;
+					p.x = 900;
+					p.y = 700;
+				}
+				
+				p.movement.getp(new FormalField(String.class));
+				Thread.sleep(1000);
+				repository.remove(p.name+"_positions");
+				repository.remove(p.name+"_movement");
+				queue.put("GameEnd");
 			}
-			
+			}
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -249,11 +281,11 @@ try {
 			}
 			else if(playerNumber == 3) {
 				this.x=100;
-				this.y=900;
+				this.y=700;
 			}
 			else if(playerNumber == 4) {
 				this.x=900;
-				this.y=900;
+				this.y=700;
 			}
 		}
 		public void decreaseAngle() {

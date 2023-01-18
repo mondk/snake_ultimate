@@ -84,14 +84,10 @@ public class Client {
 			while(true) {
 				
 				
-				Object[] b = chat.queryp(new ActualField("begin")); //waits until host types "start" where server will write "begin" to all.
-				if(b!=null) {
-					System.out.println("Game is starting...");
-					break;
-				}
+			chat.get(new ActualField("begin")); //waits until host types "start" where server will write "begin" to all.
 				
 				
-			}	
+				
 			
 			String uriM = "tcp://"+IP+":9002/"+name+"_movement?keep"; //creates game channels for when game starts
 			String uriP = "tcp://"+IP+":9002/"+name+"_positions?keep";
@@ -107,7 +103,9 @@ public class Client {
 			//change to numplayers
 			new Thread(new PlayerInGame((int) chat.query(new FormalField(Integer.class))[0],name,position,movement)).start(); //starts the inGame class
 			
-			
+			chat.get(new ActualField("GameEnd"));
+			System.out.println("Returning to Lobby");
+			}
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block

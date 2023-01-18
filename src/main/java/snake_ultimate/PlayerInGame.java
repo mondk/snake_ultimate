@@ -81,6 +81,7 @@ public class PlayerInGame implements Runnable{
 	}
 		public void input(String i) {
 			try {
+				System.out.println("Locking");
 				while(true) {//mutual exclusion on p.movement from host thread by setting lock2
 					this.movement.put("Lock2");
 					if(this.movement.queryp(new ActualField("Lock1")) == null) {
@@ -103,7 +104,7 @@ public class PlayerInGame implements Runnable{
 		
 		int numPlayers; //used to draw each player in game
 		int x [] = {100, 900, 100, 900}; //start positions for all 4 wether they join or not
-		int y [] = {100, 100, 900, 900};
+		int y [] = {100, 100, 700, 700};
 		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}; //colour for each player
 		private RemoteSpace position;
 	//	private RemoteSpace movement;
