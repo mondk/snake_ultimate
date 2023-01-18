@@ -87,7 +87,6 @@ public class PlayerInGame implements Runnable{
 				this.movement.put(i);
 				this.movement.get(new ActualField("Lock2"));
 			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 			
 		}
