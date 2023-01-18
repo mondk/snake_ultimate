@@ -94,7 +94,7 @@ try {
 				queue.put("Server","GO!!!",p.name);
 			}
 			
-			while(playersAlive > 0) {
+			while(playersAlive > 1) {
 				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
@@ -249,11 +249,11 @@ try {
 			}
 			else if(playerNumber == 3) {
 				this.x=100;
-				this.y=900;
+				this.y=700;
 			}
 			else if(playerNumber == 4) {
 				this.x=900;
-				this.y=900;
+				this.y=700;
 			}
 		}
 		public void decreaseAngle() {

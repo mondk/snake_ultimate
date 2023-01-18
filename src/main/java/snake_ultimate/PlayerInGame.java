@@ -103,7 +103,7 @@ public class PlayerInGame implements Runnable{
 		
 		int numPlayers; //used to draw each player in game
 		int x [] = {100, 900, 100, 900}; //start positions for all 4 wether they join or not
-		int y [] = {100, 100, 900, 900};
+		int y [] = {100, 100, 700, 700};
 		Color color[] = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW}; //colour for each player
 		private RemoteSpace position;
 	//	private RemoteSpace movement;
