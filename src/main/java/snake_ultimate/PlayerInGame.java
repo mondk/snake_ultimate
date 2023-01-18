@@ -143,6 +143,7 @@ public class PlayerInGame implements Runnable{
 		public void run(){ //drawThread thread
 			try {
 				boolean gameInProgress = true;
+				position.put("Ready");
 				while(gameInProgress){
 					
 					repaint(); //paints everything

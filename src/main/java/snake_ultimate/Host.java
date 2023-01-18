@@ -74,8 +74,11 @@ try {
 			
 			byte playersAlive = (byte) players.size();
 			
-			Thread.sleep(3000); //countdown for gane to begin
 			for(PlayerInfo p: players) {
+				p.posistion.get(new ActualField("Ready"));
+			}
+			for(PlayerInfo p: players) {
+				queue.put("Server", "All players have connected", p.name);
 				queue.put("Server","Game starting in 3",p.name);
 			}
 			Thread.sleep(1000);
