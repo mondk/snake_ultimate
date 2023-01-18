@@ -22,8 +22,8 @@ public class Client {
 			System.out.println("Hello and Welcome to ultimate Snek!"); //introduction
 			System.out.println();
 			System.out.print("Please enter a name:");
-			String name = input.readLine(); //safes users name
-			
+			String name = input.readLine(); //untested if some names might trigger something in code
+			//be specially minded, the game cant handle 2 people with the same name
 			
 			boolean isHost = false;
 			boolean gameIsRunning = false;
@@ -31,7 +31,6 @@ public class Client {
 
 			
 			while(true) {
-				//choose role in game
 				System.out.println("Type \"Host\" if you want to host a game,");
 				System.out.println("type \"Join\" if you want to join a game.");
 				System.out.println("Or type \"Exit\" to close the game");
@@ -44,12 +43,15 @@ public class Client {
 				else if(option.equals("Join")) {
 					break;
 				}
+				else if(option.equals("Exit")) { //does not exit yet (might remove)
+					break;
+				}
 				else {
 					System.out.println("Uknown comand!");
 				}
 			}
 			System.out.print("Write IP address or enter for default IP: ");
-			option = input.readLine(); //ask for IP
+			option = input.readLine(); //ask for Ip
 			if(option.isEmpty()){
 				IP = InetAddress.getLocalHost().getHostAddress();
 			}
@@ -58,7 +60,8 @@ public class Client {
 			}
 			String uri = "tcp://"+IP+":9002/queue?keep";//sets up uri for lobby given IP
 			if(isHost) {
-				new Thread(new Host("tcp://"+IP+":9002/?keep")).start(); //starts thread on the given uri
+				new Thread(new Host("tcp://"+IP+":9002/?keep")).start(); //starts thread on the givenuri
+			//	Thread.sleep(200);
 			}
 			
 			
@@ -66,12 +69,14 @@ public class Client {
 			// Default value
 		
 			// Connect to the remote chat space 
-			System.out.println("Connecting to chat space " + uri + "..."); //connects to the given uri
+			System.out.println("Connecting to chat space " + uri + "..."); //connects to the gicen uri
 			RemoteSpace chat = new RemoteSpace(uri);
 
-			chat.put("join", name,1); //types to server join to create a playerInfo object.
+			chat.put(name,"join"); //types to server join to create a playerInfo object.
 			// Keep sending whatever the user types
+			//Thread.sleep(50);
 			new Thread(new WriteChat(chat,name,isHost)).start(); //allows to chat (and start game for host)
+			//Thread.sleep(50);
 			new Thread(new ReadChat(chat,name)).start(); //allows to print chat
 			
 			System.out.println("Start chatting...");
@@ -94,6 +99,7 @@ public class Client {
 			
 			
 			
+			//System.out.println(movement.query(new FormalField(String.class))[0]);
 			//change to numplayers
 			new Thread(new PlayerInGame((int) chat.query(new FormalField(Integer.class))[0],name,position,movement)).start(); //starts the inGame class
 			
@@ -102,8 +108,10 @@ public class Client {
 			}
 
 		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
