@@ -1,4 +1,18 @@
+package snake_ultimate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.*;
+
+import org.jspace.ActualField;
+import org.jspace.FormalField;
+import org.jspace.SequentialSpace;
+import org.jspace.SpaceRepository;
+
+public class Host implements Runnable{
 
 	private ArrayList<PlayerInfo> players;
 	private String uri;
@@ -6,6 +20,7 @@
 	Host(String uri){
 		this.uri=uri;
 		this.players=new ArrayList<>();
+		map = new byte[1000][1000];
 	}
 	@Override
 	public void run() {
