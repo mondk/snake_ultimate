@@ -63,10 +63,10 @@ try {
 			for(PlayerInfo p:players) {
 				repository.add(p.name+"_positions", p.posistion);
 				repository.add(p.name+"_movement", p.movement);
+				queue.put("begin"); //send a message with triggers all joined players to begin their ingame threads
+				queue.put(players.size());
 				
 			}
-			queue.put("begin"); //send a message with triggers all joined players to begin their ingame threads
-			queue.put(players.size());
 			//players.get(0).movement.put("a");
 			
 
