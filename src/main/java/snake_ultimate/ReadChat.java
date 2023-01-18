@@ -15,11 +15,13 @@ public class ReadChat implements Runnable{
 	}
 	@Override
 	public void run() {
+		// TODO Auto-generated method stub
 		while(true) {
 			Object[] t = null;
 			try {
-				t = chat.get(new FormalField(String.class),new FormalField(String.class),new ActualField(name)); //gets from server
+				t = chat.get(new FormalField(String.class),new FormalField(String.class),new FormalField(String.class)); //gets from server
 			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			System.out.println(t[0] + ": " + t[1]); //and print message
