@@ -22,20 +22,21 @@ public class WriteChat implements Runnable{
 	
 	@Override
 	public void run() {
+		// TODO Auto-generated method stub
 		while(true) {
 			
 			try {
 				String message = input.readLine();
 				if(message.equals("start")&&isHost) {//only host can start game
-					chat.put("start");
+					chat.put("ishost","start");
 					continue;
 				}
-				chat.put(name, message,"lol"); //writes to server
-			} 
-			catch (InterruptedException e) {
+				chat.put(name, message); //writes to server
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
-			catch (IOException e) {
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
