@@ -29,6 +29,7 @@ public class WriteChat implements Runnable{
 				String message = input.readLine();
 				if(message.equals("start")&&isHost) {//only host can start game
 					chat.put("start");
+					continue;
 				}
 				chat.put(name, message,"lol"); //writes to server
 			} catch (InterruptedException e) {

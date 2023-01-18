@@ -162,6 +162,7 @@ public class PlayerInGame implements Runnable{
 						}
 					}
 				}
+				position.put("Close");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

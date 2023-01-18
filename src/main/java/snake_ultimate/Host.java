@@ -95,7 +95,7 @@ try {
 				queue.put("Server","GO!!!",p.name);
 			}
 			
-			while(playersAlive > 1) {
+			while(playersAlive > 0) {
 				Thread.sleep(30); //slow down game
 				//update player position
 				for(PlayerInfo p:players) {
@@ -189,7 +189,7 @@ try {
 					}
 				}
 				else {
-					p.isAlive = true;
+					p.isAlive = true; //reset game
 				}
 				
 				if(p.playernumber == 1) { //start angle depending on player and spawn location
@@ -213,8 +213,8 @@ try {
 					p.y = 700;
 				}
 				
-				p.movement.getp(new FormalField(String.class));
-				Thread.sleep(1000);
+				p.movement.getp(new FormalField(String.class)); //empty movement
+				p.posistion.get(new ActualField("Close"));//wait for threat to close before removing repos
 				repository.remove(p.name+"_positions");
 				repository.remove(p.name+"_movement");
 				queue.put("GameEnd");
